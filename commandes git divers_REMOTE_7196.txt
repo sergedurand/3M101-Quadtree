@@ -13,8 +13,4 @@ git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe
 ça doit être analogue pour un autre éditeur. Certains éditeurs (atom, vim, emacs) sont mieux gérés cf :
 https://help.github.com/articles/associating-text-editors-with-git/
 
-<<<<<<< HEAD
-ajout en local
-=======
 ajout sur github
->>>>>>> a3023fc71c73c948e62957d9bd27a4449c1e2184
