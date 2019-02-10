@@ -6,25 +6,28 @@ Created on Sun Feb 10 19:26:11 2019
 """
 
 class ArbreBinaire():
-    def __init__(self,clef = None,gauche = None ,droite = None):
-        """ Anything x ArbreBinaire x ArbreBinaire -> ArbreBinaire"""
+    def __init__(self,clef,gauche = None ,droite = None):
+        """ Anything x ArbreBinaire x ArbreBinaire -> ArbreBinaire
+        Constructeur d'arbre"""
         self.clef = clef
         self.gauche = gauche
         self.droite = droite
         
+    
+        
     def filsGauche(self):
         """renvoie le sous arbre gauche"""
         if self == None :
-            print("Arbre vide \n")
             return None
         return self.gauche
     
     def filsDroit(self):
         """renvoie le sous arbre droit"""
         if self == None :
-            print("Arbre vide \n")
             return None
-        return self.droit
+        return self.droite
+    
+    
         
     
     

@@ -3,14 +3,17 @@
 \geometry{hmargin = 2cm,vmargin = 2cm}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage[table]{xcolor}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{mathrsfs}
 \usepackage{graphicx}
-\usepackage{listings} 
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning, calc}
+\tikzstyle{vertex}=[draw,fill=white!15,circle,minimum size=20pt,inner sep=0pt]
 \usepackage{color}
-\usepackage[table]{xcolor}
 \definecolor{darkWhite}{rgb}{0.94,0.94,0.94}
 \lstset{
   aboveskip=3mm,
@@ -98,12 +101,60 @@ En suivant le paradigme de la programmation objet, on créé une classe arbre ay
 On pourra déclarer la classe comme ceci :
 
 \begin{lstlisting}
-def __init__(self,clef = None,gauche = None ,droite = None):
-        """gauche et droite sont des ArbreBinaire"""
+class ArbreBinaire():
+    def __init__(self,clef,gauche = None ,droite = None):
+        """ Anything x ArbreBinaire x ArbreBinaire -> ArbreBinaire
+        Constructeur d'arbre"""
         self.clef = clef
         self.gauche = gauche
         self.droite = droite
 \end{lstlisting}
+
+Exemple d'instanciation :
+
+\begin{lstlisting}
+Feuille1 = ArbreBinaire(1)
+Feuille2 = ArbreBinaire(2)
+Arbre = ArbreBinaire(3,Feuille1,Feuille2)
+\end{lstlisting}
+
+L'arbre créé est :
+\begin{center}
+
+
+\begin{tikzpicture}[very thick,level/.style={sibling distance=60mm/#1}]
+\node [vertex] (r){$17$}
+  child {
+    node [vertex] (a) {$19$}
+    child {
+      node [vertex] {$20$}
+      child {
+        node [vertex] {$-3$}
+        child {node [vertex] {$17$}}
+        child {node [vertex] {$5$}}
+      }
+      child {node [vertex] {$6$}}
+    }
+    child {
+      node [vertex] {$3$}
+      child {node [vertex] {$7$}}
+      child {node [vertex] {$2$}}
+    }
+  }
+  child {
+    node [vertex] {$9$}
+    child {
+      node [vertex] {$8$}
+      child {node [vertex] {$2$}}
+    }
+    child {
+      node [vertex] {$11$}
+      child {node [vertex] {$17$}}
+      child {node [vertex] {$-4$}}
+    }
+  };
+\end{tikzpicture}
+\end{center}
 
 
 
