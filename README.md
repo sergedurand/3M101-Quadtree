@@ -1,6 +1,7 @@
 # 3M101-Quadtree
 Docs divers :
-http://pageperso.lif.univ-mrs.fr/~francois.denis/algoMPCI/chap1.pdf
+Arbres, arbre d'expression, arbre binaire de recherche http://pageperso.lif.univ-mrs.fr/~francois.denis/algoMPCI/chap1.pdf
+Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
 
 pour gérer les conflits git :
 https://developer.atlassian.com/blog/2015/12/tips-tools-to-solve-git-conflicts/
