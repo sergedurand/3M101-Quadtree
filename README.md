@@ -13,7 +13,8 @@ peut être qu'un autre gestionnaire serait plus clair ?
 - Arbre d'expression (optionnel)
 - Arbres binaires de recherche : affichage (parcours infixe/suffixe/préfixe) / insertion (Charlotte) / suppression (Thiziri) / recherche / modification (Thiziri) : étude théorique (algo en pseudo code / python + compléxité)
 - comparaison implémentation : liste VS structure récursive (Serge)
-- Apprendre à créer des arbres en LaTeX (Serge)
+- Apprendre à créer des arbres en LaTeX (Serge) 
+    ok cf https://github.com/MartinThoma/LaTeX-examples/tree/master/tikz/binary-tree
 - Implémenter un arbre binaire de recherche : cas concret (Thiziri)
 - générateur d'arbre alétoire (Kevin)
 - étude expérimentale de la complexité (Kevin)
