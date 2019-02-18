@@ -6,12 +6,12 @@ Created on Sun Feb 10 19:26:11 2019
 """
 
 class ArbreBinaire():
-    def __init__(self,clef,gauche = None ,droite = None):
+    def __init__(self,clef,gauche = None ,droit = None):
         """ Anything x ArbreBinaire x ArbreBinaire -> ArbreBinaire
         Constructeur d'arbre"""
         self.clef = clef
         self.gauche = gauche
-        self.droite = droite
+        self.droit = droit
         
     
         
@@ -25,9 +25,14 @@ class ArbreBinaire():
         """renvoie le sous arbre droit"""
         if self == None :
             return None
-        return self.droite
+        return self.droit
+	
+	def estVide(self):
+		
     
     
-        
+		
+		
+	   
     
     
