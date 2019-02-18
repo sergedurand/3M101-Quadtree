@@ -24,9 +24,9 @@ class Arbre:
 	
 		
 	def estVide(self):
-			if not self or not (self.clef or self.gauche or self.droit):
-				return True
-			return False
+		if self.clef == None:
+			return True
+		return False
 
 	def insertion(self,x):
 		if self.clef is not None:
@@ -36,15 +36,14 @@ class Arbre:
 				#cas où le sous arbre gauche est vide
 				else :
 					self.gauche = Arbre(x)
+				
 			elif x > self.clef:
 				if self.droit is not None:
-					self.droit.insertion(x)
-				#cas où le sous arbre droite est vide
+					 self.droit.insertion(x)
+				#cas où le sous arbre droit est vide
 				else :
 					self.droit = Arbre(x)
 			#s'il y a égalité il n'y a rien à faire
-			else:
-				return
 			
 		#cas ou l'arbre est vide
 		else:
@@ -62,18 +61,19 @@ class Arbre:
 	def recherche(self,x):
 		if self.clef == None:
 			return False
-		if x==self.clef:
-			return self
+		
 		if x<self.clef:
 			if self.gauche is not None:
 				return self.gauche.recherche(x)
 			else :
 				return False
-		else:
+		elif x > self.clef:
 			if self.droit is not None:
 				return self.droit.recherche(x)
 			else: 
 				return False
+		else: #cas où x == clef
+			return self
 	
 	def estFeuille(self):
 		if self.clef == None:
@@ -119,7 +119,9 @@ class Arbre:
 		print(self.clef,end=' ')
 		if self.droit is not None:
 			self.droit.parcoursInfixe()
+		
 			
+
 	def copy(self):
 		"""renvoie une copie de l'arbre
 		utilise un parcours en largeur itératif"""
@@ -139,7 +141,24 @@ class Arbre:
 					f.append(racine.droit)
 		return res
 		
-		
+	def taille(self):
+		"""renvoie la taille de l'arbre
+		utilise un parcours en largeur itératif"""
+		cpt = 0
+		#file
+		if self.clef == None:
+			return cpt
+		else:
+			f = []
+			f.append(self)
+			while(len(f)!=0):
+				racine = f.pop()
+				cpt += 1
+				if racine.gauche is not None:
+					f.append(racine.gauche)
+				if racine.droit is not None:
+					f.append(racine.droit)
+		return cpt
 	
 	
 				
@@ -148,11 +167,10 @@ def arbreAleatoire(n,m):
 	res = Arbre(None,None,None)
 	for i in range(n):
 		x = random.randrange(0,m)
-		print("x = ",x)
 		res.insertion(x)
 	return res
 
-		
+
 #le test
 def main_loop():
 	T=Arbre(1,None,None)
