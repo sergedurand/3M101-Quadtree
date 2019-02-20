@@ -17,6 +17,6 @@ peut être qu'un autre gestionnaire serait plus clair ?
     ok cf https://github.com/MartinThoma/LaTeX-examples/tree/master/tikz/binary-tree
 - Implémenter un arbre binaire de recherche : cas concret (Thiziri)
 - générateur d'arbre alétoire (Kevin)
-- étude expérimentale de la complexité (Kevin)
+- étude expérimentale de la complexité (Kevin) /// Problème avec Python -> C
 - idem Quadtree
 - Implémenter annales s1 2017 (Serge)
