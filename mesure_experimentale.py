@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 
-
 import random
 import time
 import sys
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+import csv
+
+
+
 
 class Arbre:
 	
@@ -237,15 +243,46 @@ def main_loop():
 if __name__=='__main__':
 	main_loop()"""
 	
-sys.setrecursionlimit(2147483647)
-T=Arbre(None,None,None)
-for i in range(10000):
-	T.insertion(i)
-#T.parcoursInfixe()
-start=time.time()
-T.insertion(10000)
-n=time.time()-start
-#T.parcoursInfixe()
-print(n)
+
 
 	
+"""tests experimentaux"""
+
+def testMasseRecherche(t,h):
+	"""t = nombre de test à chaque taille d'arbre
+	h = hauteur d'arbre"""
+	Ln = []
+	Lres = []
+	j=10
+	while(j<=2**h-1):
+		#on ne créé qu'un arbre, mais on fait t recherches
+		arbre = arbreAleatoire(j,1500)
+		Lt = []
+		e = random.randrange(0,1500)
+		for i in range(t):
+			
+			tdeb = time.perf_counter()
+			T = arbre.recherche(e)
+			tfin = time.perf_counter()-tdeb
+			Lt.append(tfin)
+		Lres.append(np.median(Lt))
+		Ln.append(j)
+		j = j*2
+	return (Ln,Lres)
+	
+def graphe(L1,L2): #graphe obtenu par les mesures
+    x = np.array(L1)
+    y = np.array(L2)
+    fig = plt.figure()
+    plt.xlim(L1[0],L1[len(L1)-1])
+    plt.plot(x,y)
+    fig.savefig('CalculRecherche.png')
+    #plt.show()
+
+(L1,L2) = testMasseRecherche(50,30)
+graphe(L1,L2)
+    
+    
+
+		
+			
