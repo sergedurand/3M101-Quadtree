@@ -1,5 +1,6 @@
 import random
-
+import time
+import sys
 
 class Arbre:
 	
@@ -216,7 +217,7 @@ def arbreAleatoire(n,m):
 
 #le test
 def main_loop():
-	T=Arbre(1,None,None)
+	"""T=Arbre(1,None,None)
 	T.parcoursInfixe()
 	print("\n")
 	T.insertion(4)
@@ -225,12 +226,23 @@ def main_loop():
 	T.insertion(2)
 	T.parcoursInfixe()
 	print("\n")
-	
 	T.insertion(7)
 	T.parcoursInfixe()
 	print("\n")
 	T.suppression(2)
 	T.parcoursInfixe()
 if __name__=='__main__':
-	main_loop()
+	main_loop()"""
+	
+sys.setrecursionlimit(2147483647)
+T=Arbre(None,None,None)
+for i in range(10000):
+	T.insertion(i)
+#T.parcoursInfixe()
+start=time.time()
+T.insertion(10000)
+n=time.time()-start
+#T.parcoursInfixe()
+print(n)
+
 	
