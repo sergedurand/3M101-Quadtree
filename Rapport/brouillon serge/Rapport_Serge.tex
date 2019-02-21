@@ -165,22 +165,24 @@ Remarquons qu'idéalement il faut utiliser une structure qui combine les avantag
 Pour la structure récursive :
 \begin{itemize}
 \item[•]
-Lisibilité du code
+Lisibilité du code.
 \item[•]
-Gain mémoire pour les arbres avec des noeuds vides : on n'insère que les noeuds non vide dans l'abre
+Gain mémoire pour les arbres avec des nœuds vides : on n'insère que les nœuds non vide dans l'abre.
 \item[•]
-Plus grande souplesse dans le type de donnée représentée dans le noeud
+Plus grande souplesse dans le type de donnée représentée dans le nœud.
 \end{itemize}
 \paragraph*{}
 Pour la représentation en liste :
 \begin{itemize}
 \item[•]
-Gain de mémoire pour les arbres pleins ou parfait
+Gain de mémoire pour les arbres pleins ou parfait.
 \item[•]
 Simplicité de la mise en place, notamment pour les langages implémentant déjà une structure de liste / tableau (en Python on dispose par exemple déjà des primitives append, pop, len etc).
 \item[•]
-Accès immédiat au parent
+Accès immédiat au parent.
 \end{itemize}
 Les inconvénients se déduisent des avantages : pour la structure récursive elle est plus lourde à mettre en place, ça peut être lourd en mémoire pour des arbres pleins.
-Pour la liste, le code sera peut être moins lisible et surtout on gâche de la mémoire lorsque l'arbre contient des noeuds vide. 
+Pour la liste, le code sera peut être moins lisible et surtout on gâche de la mémoire lorsque l'arbre contient des nœuds vide. 
+
+Dans certains cas la liste est particulièrement appropriée par exemple pour la représentation des tas (arbre binaire parfait sur un ensemble totalement ordonnée où les chemins de la racine vers les feuilles est toujours croissant), utilisée dans le tri par tas où le but est d'ordonner une liste. 
 \end{document}
