@@ -2,6 +2,7 @@
 Docs divers :
 Arbres, arbre d'expression, arbre binaire de recherche http://pageperso.lif.univ-mrs.fr/~francois.denis/algoMPCI/chap1.pdf
 Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
+écriture en LaTeX : https://fr.wikibooks.org/wiki/LaTeX/Structuration_du_texte
 
 
 
