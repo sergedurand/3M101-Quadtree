@@ -133,30 +133,54 @@ L'arbre créé est :
 \end{tikzpicture}
 \end{center}
 
-Test Quadtree :
+\subsection{Liste}
+On peut aussi représenter l'arbre sous forme de liste. L'idée est d'avoir la racine au début de la liste, le fils gauche à l'index 1, le fils droite à l'index 2 et ainsi de suite. Pour un nœud à l'indice i, on trouve son fils gauche à l'indice 2i de la liste, et le droit à l'indice 2i+1. 
+On peut donc également retrouver le père d'un nœud facilement : pour un nœud d'index i, le père est à l'index $\lfloor \frac{i-1}{2} \rfloor$ (on prend la partie entière dans la division par 2).
+On fera attention à ne pas sauter les nœuds vides, il faut bien les représenter dans la liste par un caractère spécial en fonction de ce que l'arbre contient comme type de donnée. Par exemple mettre False pour un arbre contenant des entiers éventuellement nuls n'est pas une bonne solution, le test False == 0 renvoyant true en Python (et beaucoup d'autres langages).
+Par exemple l'arbre suivant :
+
 \begin{center}
 \begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1}]
-\node [vertex] {$3$}
+\node [vertex] {$5$}
   child {
-    node [vertex, left]  {$1$}
-    child {
-    	node [vertex] (r) {$2$}
-    	child {
-    		node [vertex] {$5$}
-   		}
-   	}
-  }
-
-   ;
-\end{tikzpicture}
-\end{center}
-test pour génération python :
-\begin{center}
-\begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1}]
-
-
+    node [vertex]  {$2$}
+    child{edge from parent[draw=none]}
+    child{node [vertex] {$3$}}
+   }
+   child {
+    node [vertex] {$10$}
+    child{node [vertex] {$9$}}	
+    child{node [vertex] {$12$}}
+   };
 \end{tikzpicture}
 \end{center}
 
+sera représenté par la liste :
+$[5,2,10,"vide",3,9,12]$
 
+Remarquons qu'idéalement il faut utiliser une structure qui combine les avantages de la liste chaînée et des tableaux : nous avons besoins d'accéder à aux éléments à une position précise en temps constant si possible, mais la structure doit être de taille flexible pour l'agrandir ou la réduire. 
+\subsection{Comparaison}
+\subsubsection{Avantages et inconvénients}
+\paragraph*{}
+Pour la structure récursive :
+\begin{itemize}
+\item[•]
+Lisibilité du code
+\item[•]
+Gain mémoire pour les arbres avec des noeuds vides : on n'insère que les noeuds non vide dans l'abre
+\item[•]
+Plus grande souplesse dans le type de donnée représentée dans le noeud
+\end{itemize}
+\paragraph*{}
+Pour la représentation en liste :
+\begin{itemize}
+\item[•]
+Gain de mémoire pour les arbres pleins ou parfait
+\item[•]
+Simplicité de la mise en place, notamment pour les langages implémentant déjà une structure de liste / tableau (en Python on dispose par exemple déjà des primitives append, pop, len etc).
+\item[•]
+Accès immédiat au parent
+\end{itemize}
+Les inconvénients se déduisent des avantages : pour la structure récursive elle est plus lourde à mettre en place, ça peut être lourd en mémoire pour des arbres pleins.
+Pour la liste, le code sera peut être moins lisible et surtout on gâche de la mémoire lorsque l'arbre contient des noeuds vide. 
 \end{document}

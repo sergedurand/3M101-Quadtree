@@ -52,12 +52,19 @@ class Arbre:
 
 	#fonction utilisé dans suppression
 	def Max(self):
-		if not self:
+		if self.clef == None:
 			return None
 		while (self.droit is not None):
 			self=self.droit
 		return self.clef
-
+	
+	def Min(self):
+		if self.clef == None:
+			return None
+		while(self.gauche is not None):
+			self = self.gauche
+		return self.clef
+	
 	def recherche(self,x):
 		if self.clef == None:
 			return False
@@ -111,7 +118,23 @@ class Arbre:
 			return Arbre(self.clef,self.gauche.suppression(x),self.droit)
 		return Arbre(self.clef,self.gauche,self.droit.suppression(x))
 	
+	def hauteur(self):
+		"""convention : arbre vide de hauteur 0
+		arbre réduit à un noeud : hauteur 1"""
+		if self.clef == None:
+			return 0
+		if self.gauche is None and self.droit is None:
+			return 1
+		if self.gauche is None:#l'arbre droit est forcément non vide
+			return self.droit.hauteur()+1
+		if self.droit is None:#l'arbre gauche est forcément non vide
+			return self.gauche.hauteur()+1
+		#les deux fils sont non vide:
+		return max(self.gauche.hauteur(),self.droit.hauteur())+1
+		
+	
 	def parcoursInfixe(self):
+		"""affichage gauche puis racine puis droit"""
 		if self.clef == None:
 			return
 		if self.gauche is not None:
@@ -119,6 +142,27 @@ class Arbre:
 		print(self.clef,end=' ')
 		if self.droit is not None:
 			self.droit.parcoursInfixe()
+			
+	def parcoursPostfixe(self):
+		"""postfixe = suffixe... affichage gauche puis droit puis racine"""
+		if self.clef == None:
+			return
+		if self.gauche is not None:
+			self.gauche.parcoursInfixe()
+		if self.droit is not None:
+			self.droit.parcoursInfixe()
+		print(self.clef,end=' ')
+		
+	def parcoursPrefixe(self):
+		"""affichage racine puis gauche puis droit"""
+		if self.clef == None:
+			return
+		print(self.clef,end=' ')
+		if self.gauche is not None:
+			self.gauche.parcoursInfixe()
+		if self.droit is not None:
+			self.droit.parcoursInfixe()
+		
 		
 			
 
@@ -126,10 +170,10 @@ class Arbre:
 		"""renvoie une copie de l'arbre
 		utilise un parcours en largeur itératif"""
 		res = Arbre(None)
-		#file
 		if self.clef == None:
 			return res
 		else:
+			#file : on utilise une liste et le pop et le append
 			f = []
 			f.append(self)
 			while(len(f)!=0):
@@ -145,7 +189,6 @@ class Arbre:
 		"""renvoie la taille de l'arbre
 		utilise un parcours en largeur itératif"""
 		cpt = 0
-		#file
 		if self.clef == None:
 			return cpt
 		else:
