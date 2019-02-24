@@ -5,6 +5,7 @@ import random
 import time
 import sys
 
+
 class Arbre:
 	
 	"""les fonctions modifient l'abre sur lesquels elles sont appelées:
@@ -17,7 +18,7 @@ class Arbre:
 	def getClef(self):
 		return self.clef
 	
-	def filGauche(self):
+	def filsGauche(self):
 		return self.gauche
 	
 	def filsDroit(self):
@@ -96,7 +97,7 @@ class Arbre:
 		while(self.droit is not None):
 			self = self.droit
 		#on le remplace par son sous arbre gauche
-		self = self.gauche
+		return self.gauche
 	
 	def suppressionRacine(self):
 		if self.clef is not None:
@@ -139,7 +140,7 @@ class Arbre:
 	
 	def parcoursInfixe(self):
 		"""affichage gauche puis racine puis droit"""
-		if self.clef == None:
+		if self.clef is None:
 			return
 		if self.gauche is not None:
 			self.gauche.parcoursInfixe()
@@ -149,7 +150,7 @@ class Arbre:
 			
 	def parcoursPostfixe(self):
 		"""postfixe = suffixe... affichage gauche puis droit puis racine"""
-		if self.clef == None:
+		if self.clef is None:
 			return
 		if self.gauche is not None:
 			self.gauche.parcoursInfixe()
@@ -159,7 +160,7 @@ class Arbre:
 		
 	def parcoursPrefixe(self):
 		"""affichage racine puis gauche puis droit"""
-		if self.clef == None:
+		if self.clef is None:
 			return
 		print(self.clef,end=' ')
 		if self.gauche is not None:
@@ -237,15 +238,6 @@ def main_loop():
 if __name__=='__main__':
 	main_loop()"""
 	
-sys.setrecursionlimit(2147483647)
-T=Arbre(None,None,None)
-for i in range(10000):
-	T.insertion(i)
-#T.parcoursInfixe()
-start=time.time()
-T.insertion(10000)
-n=time.time()-start
-#T.parcoursInfixe()
-print(n)
+
 
 	

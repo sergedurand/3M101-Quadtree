@@ -102,7 +102,7 @@ class Arbre:
 		while(self.droit is not None):
 			self = self.droit
 		#on le remplace par son sous arbre gauche
-		self = self.gauche
+		return self = self.gauche
 	
 	def suppressionRacine(self):
 		if self.clef is not None:
@@ -123,7 +123,7 @@ class Arbre:
 				return self.gauche
 			else:
 				y=self.gauche.Max()
-				return Arbre(y,self.gauche.suppression(y),self.droit)
+				return Arbre(y,self.gauche.suppressionMax(y),self.droit)
 		if x<self.clef:
 			return Arbre(self.clef,self.gauche.suppression(x),self.droit)
 		return Arbre(self.clef,self.gauche,self.droit.suppression(x))

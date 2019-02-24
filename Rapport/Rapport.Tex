@@ -168,7 +168,7 @@ Par exemple l'arbre suivant :
 \begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1}]
 \node [vertex] {$5$}
   child {
-    node [vertex]  {$2$}
+    node [vertex,fill=red!15]  {$2$}
     child{edge from parent[draw=none]}
     child{node [vertex] {$3$}}
    }
@@ -186,7 +186,6 @@ $[5,2,10,"vide",3,9,12]$
 Remarquons qu'idéalement il faut utiliser une structure qui combine les avantages de la liste chaînée et des tableaux : nous avons besoins d'accéder à aux éléments à une position précise en temps constant si possible, mais la structure doit être de taille flexible pour l'agrandir ou la réduire. 
 \subsection{Comparaison}
 \subsubsection{Avantages et inconvénients}
-\paragraph*{}
 Pour la structure récursive :
 \begin{itemize}
 \item[•]
