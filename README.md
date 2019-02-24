@@ -21,12 +21,15 @@ Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
 - Implémenter annales s1 2017 (Serge)
 - Implémentation de rotation pour les BST + utilisation dans l'insertion pour garder des arbres équilibrés.
 - regarder si un concept de rotation peut être appliqué pour les quadtree.
+- à voir pour la génération du code LaTeX d'arbre : https://jeltef.github.io/PyLaTeX/current/examples/tikzdraw.html
 
 - idées de trucs supplémentaire à chercher, sur la théorie : 
     - Nombre d'arbre binaire pour une taille n donnée ? (indice : nombres de catalan, mais ça marche que pour les arbres binaires entiers). 
     - Nombre d'arbre binaire de recherche pour une taille n donnée ? 
     - Même question pour les quadtree.
     - questions sur les hauteurs : espérance de la hauteur en fonction de la taille ? Variance ?
+    
+ 
 
 Source pour l'implémentation en python :
 
