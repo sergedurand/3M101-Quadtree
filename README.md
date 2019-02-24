@@ -15,6 +15,8 @@ Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
 - Implémenter un arbre binaire de recherche : cas concret (Thiziri)
 - générateur d'arbre alétoire (Kevin)
 - étude expérimentale de la complexité (Kevin) /// Problème avec Python -> C
+    éventuellement faire des tests sur des biblothèques déjà faites :
+    https://pypi.org/project/binarytree/, https://pypi.org/project/bintrees/, https://github.com/TylerSandman/py-bst par ex. 
 - idem Quadtree
 - Implémenter annales s1 2017 (Serge)
 
