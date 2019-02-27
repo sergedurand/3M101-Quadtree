@@ -1,26 +1,25 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.21)  27 FEB 2019 15:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.21)  27 FEB 2019 15:07
 entering extended mode
-**"./Description et vocabulaire des arbres binaires.tex"
-("Description et vocabulaire des arbres binaires.tex"
+**"./fichier des comptes rendus.tex"
+("fichier des comptes rendus.tex"
 LaTeX2e <2018-12-01>
 
-("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\report.cl
-s"
-Document Class: report 2018/09/03 v1.4i Standard LaTeX document class
+("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.c
+ls"
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\size10.cl
 o"
 File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count80
-\c@chapter=\count81
-\c@section=\count82
-\c@subsection=\count83
-\c@subsubsection=\count84
-\c@paragraph=\count85
-\c@subparagraph=\count86
-\c@figure=\count87
-\c@table=\count88
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
@@ -64,28 +63,28 @@ Language: french 2018/09/14 v3.5c French support from the babel system
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\babel.
 def"
 File: babel.def 2018/11/13 3.27 Babel common definitions
-\babel@savecnt=\count89
+\babel@savecnt=\count88
 \U@D=\dimen103
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\txtbab
 el.def")
-\bbl@dirlevel=\count90
+\bbl@dirlevel=\count89
 )
 \l@acadian = a dialect from \language\l@french 
-\FB@nonchar=\count91
+\FB@nonchar=\count90
 Package babel Info: Making : an active character on input line 414.
 Package babel Info: Making ; an active character on input line 415.
 Package babel Info: Making ! an active character on input line 416.
 Package babel Info: Making ? an active character on input line 417.
-\FBguill@level=\count92
+\FBguill@level=\count91
 \FBold@everypar=\toks16
 \FB@Mht=\dimen104
-\mc@charclass=\count93
-\mc@charfam=\count94
-\mc@charslot=\count95
-\std@mcc=\count96
-\dec@mcc=\count97
-\c@FBcaption@count=\count98
+\mc@charclass=\count92
+\mc@charfam=\count93
+\mc@charslot=\count94
+\std@mcc=\count95
+\dec@mcc=\count96
+\c@FBcaption@count=\count97
 \listindentFB=\dimen105
 \descindentFB=\dimen106
 \labelindentFB=\dimen107
@@ -343,8 +342,8 @@ Package caption3 Info: TeX engine: e-TeX on input line 64.
 \caption@parindent=\dimen119
 \caption@hangindent=\dimen120
 )
-\c@caption@flags=\count99
-\c@ContinuedFloat=\count100
+\c@caption@flags=\count98
+\c@ContinuedFloat=\count99
 )
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hyper
 ref.sty"
@@ -405,8 +404,8 @@ ions.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen121
-\Hy@linkcounter=\count101
-\Hy@pagecounter=\count102
+\Hy@linkcounter=\count100
+\Hy@pagecounter=\count101
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\pd1en
 c.def"
@@ -414,7 +413,7 @@ File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count103
+\Hy@SavedSpaceFactor=\count102
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/00miktex\hyper
 ref.cfg"
@@ -427,7 +426,7 @@ Package hyperref Info: Plain pages OFF on input line 4534.
 Package hyperref Info: Backreferencing OFF on input line 4539.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4772.
-\c@Hy@tempcnt=\count104
+\c@Hy@tempcnt=\count103
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/url\url.sty"
 \Urlmuskip=\muskip10
@@ -435,7 +434,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5125.
 \XeTeXLinkMargin=\dimen122
-\Fld@menulength=\count105
+\Fld@menulength=\count104
 \Field@Width=\dimen123
 \Fld@charsize=\dimen124
 Package hyperref Info: Hyper figures OFF on input line 6380.
@@ -447,17 +446,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6405.
 Package hyperref Info: PDF/A mode OFF on input line 6410.
 LaTeX Info: Redefining \ref on input line 6450.
 LaTeX Info: Redefining \pageref on input line 6454.
-\Hy@abspage=\count106
-\c@Item=\count107
-\c@Hfootnote=\count108
+\Hy@abspage=\count105
+\c@Item=\count106
+\c@Hfootnote=\count107
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hpdft
 ex.def"
 File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
-\Fld@listcount=\count109
-\c@bookmark@seq@number=\count110
+\Fld@listcount=\count108
+\c@bookmark@seq@number=\count109
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\rerun
 filecheck.sty"
@@ -466,52 +465,60 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
 \Hy@SectionHShift=\skip43
-) ("Description et vocabulaire des arbres binaires.aux")
-\openout1 = `"Description et vocabulaire des arbres binaires.aux"'.
+)
+Package hyperref Info: Option `breaklinks' set `true' on input line 12.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 13.
+
+Package hyperref Warning: Unexpected value `blue'
+(hyperref)                of option `colorlinks' instead of
+(hyperref)                `true' or 'false' on input line 12.
+
+("fichier des comptes rendus.aux")
+\openout1 = `"fichier des comptes rendus.aux"'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 14.
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd
 "
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 13.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 14.
  ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \degres on input line 13.
-LaTeX Info: Redefining \dots on input line 13.
-LaTeX Info: Redefining \up on input line 13.
+LaTeX Info: Redefining \degres on input line 14.
+LaTeX Info: Redefining \dots on input line 14.
+LaTeX Info: Redefining \up on input line 14.
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/context/base\supp-pd
 f.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count111
+\scratchcounter=\count110
 \scratchdimen=\dimen125
 \scratchbox=\box28
-\nofMPsegments=\count112
-\nofMParguments=\count113
+\nofMPsegments=\count111
+\nofMParguments=\count112
 \everyMPshowfont=\toks18
-\MPscratchCnt=\count114
+\MPscratchCnt=\count113
 \MPscratchDim=\dimen126
-\MPnumerator=\count115
-\makeMPintoPDFobject=\count116
+\MPnumerator=\count114
+\makeMPintoPDFobject=\count115
 \everyMPtoPDFconversion=\toks19
 )
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epsto
@@ -533,7 +540,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 13.
+Package hyperref Info: Link coloring OFF on input line 14.
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\namer
 ef.sty"
@@ -543,128 +550,94 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 titlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count117
+\c@section@level=\count116
 )
-LaTeX Info: Redefining \ref on input line 13.
-LaTeX Info: Redefining \pageref on input line 13.
-LaTeX Info: Redefining \nameref on input line 13.
- ("Description et vocabulaire des arbres binaires.out")
-("Description et vocabulaire des arbres binaires.out")
+LaTeX Info: Redefining \ref on input line 14.
+LaTeX Info: Redefining \pageref on input line 14.
+LaTeX Info: Redefining \nameref on input line 14.
+ ("fichier des comptes rendus.out")
+("fichier des comptes rendus.out")
 \@outlinefile=\write3
-\openout3 = `"Description et vocabulaire des arbres binaires.out"'.
+\openout3 = `"fichier des comptes rendus.out"'.
 
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 20.
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 29--31
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 41--45
-
- []
-
-[1
-
-{C:/Users/Charlotte/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<../../../../../figure_1.jpg, id=32, 336.50719pt x 106.89937pt>
-File: ../../../../../figure_1.jpg Graphic file (type jpg)
-<use ../../../../../figure_1.jpg>
-Package pdftex.def Info: ../../../../../figure_1.jpg  used on input line 47.
-(pdftex.def)             Requested size: 336.50635pt x 106.8991pt.
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 48.
-See the caption package documentation for explanation.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 52--55
-
- []
-
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 61.
-("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmtt.fd"
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 61.
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 61.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 20.
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 61.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 20.
 
 ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 61.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 20.
 
  ("C:\Users\Charlotte\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omxlmex.fd
 "
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 61.
+(Font)              <12> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 61.
+(Font)              <8> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 61.
+(Font)              <6> on input line 20.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 26.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 26.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 26.
 
-Overfull \hbox (1.999pt too wide) in paragraph at lines 60--64
-[]$\T1/lmtt/m/n/10 http : / / mescal . imag . fr / membres / jean-[]marc . vinc
-ent / index . html / ProTer /
+Overfull \hbox (5.5014pt too wide) in paragraph at lines 24--32
+\T1/lmr/m/n/10 pour gé-né-rer des arbres en La-tex.En ef-fet, il existe des pa-
+ckages dé-diés ([]$[]$[])
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--64
+Underfull \hbox (badness 10000) in paragraph at lines 24--32
 
  []
 
-[2 <../../../../../figure_1.jpg>]
-("Description et vocabulaire des arbres binaires.lof")
-\tf@lof=\write4
-\openout4 = `"Description et vocabulaire des arbres binaires.lof"'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 66.
- [3
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 66.
+ []
 
-("Description et vocabulaire des arbres binaires.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 66.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 66.
-Package rerunfilecheck Info: File `"Description et vocabulaire des arbres binai
-res".out' has not changed.
-(rerunfilecheck)             Checksum: 4E53B6507BAA1AF6180265496B3783BC;298.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 39.
+[1
+
+{C:/Users/Charlotte/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 39.
+
+("fichier des comptes rendus.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 39.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 39.
+Package rerunfilecheck Info: File `"fichier des comptes rendus".out' has not ch
+anged.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 39.
  ) 
 Here is how much of TeX's memory you used:
- 8232 strings out of 492946
- 128926 string characters out of 3124490
- 217315 words of memory out of 3000000
- 12020 multiletter control sequences out of 15000+200000
- 42519 words of font info for 35 fonts, out of 3000000 for 9000
+ 8164 strings out of 492946
+ 127321 string characters out of 3124490
+ 216802 words of memory out of 3000000
+ 11969 multiletter control sequences out of 15000+200000
+ 38013 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,5n,39p,666b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,4n,38p,625b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-e
 c.enc}<C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-lm/lmbx10.pfb><C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
-/public/lm/lmbx12.pfb><C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fon
-ts/type1/public/lm/lmcsc10.pfb><C:/Users/Charlotte/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/Charlotte/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on "Description et vocabulaire des arbres binaires.pdf" (3 pages
-, 152811 bytes).
+lm/lmcsc10.pfb><C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/lm/lmr10.pfb><C:/Users/Charlotte/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/lm/lmr17.pfb>
+Output written on "fichier des comptes rendus.pdf" (1 page, 85424 bytes).
 PDF statistics:
- 72 PDF objects out of 1000 (max. 8388607)
- 15 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 PDF objects out of 1000 (max. 8388607)
+ 2 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

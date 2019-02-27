@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\hypersetup{breaklinks=true, colorlinks = blue}
+
+\begin{document}
+
+\title{Comptes-rendus de l'avancée du projet}
+\author{}
+\date{}
+\maketitle
+
+\begin{center}
+	\scshape{Réunion du 22 février}
+\end{center}
+~\\
+Kevin a commencé par faire un résumé de l'avancement du projet.\\
+Plusieurs questions ont été soulevées concernant les bibliothèques disponibles pour générer des arbres en Latex.En effet, il existe des packages dédiés (\href{https://tex.stackexchange.com/questions/5447/how-can-i-draw-simple-trees-in-latex}{\underline{cliquer ici}}) mais nous avons l'intention de créer une fonction en Python qui prend en argument un arbre et qui retourne directement le code d'affichage en Latex. Serge s'occupe de cette mission. \\
+Nous avons également rencontré un problème concernant l'implémentation de la fonction suppression pour modifier une valeur en paramètre après l'appel de la fonction mais cela fonctionne sur des arbres générés aléatoirement grâce au module "random". \\
+Kevin a travaillé sur les courbes de complexité en C qu'il devra essayer de faire en Python dans une idée d'homogénéité du projet bien que le langage de programmation ne soit pas imposé. \\
+Concernant également les tests de complexité, vous nous avez conseillé d'établir d'autres statistiques comme la moyenne et l'écart-type en plus de la médiane. Aussi, la courbe doit être faite sur un même ordinateur, avec un même arbre et nous devons augmenter le nombre de tests car seulement une vingtaine peut biaiser les résultats. Pour cela, vous nous avez conseillé de répéter l'action 100 ou 1000 fois pour éviter la mesure de bruit, puis de diviser le temps par 100 ou 1000; en faisant attention aux fonctions suppression et insertion évidemment. \\
+Vous nous avez également invité à utiliser pgfplot pour afficher les courbes. Il se trouve également que cela permet de tracer des arbres (\href{https://tex.stackexchange.com/questions/203399/drawing-binary-trees-with-latex-labels}{\underline{cliquer ici}}).
+Nous avons ensuite évoqué des difficultés à utiliser Git : à propos de la gestion des conflits et la suppression de fichiers. Vous nous avez donc parler des commandes "git rm", "gitignore" et "git mv". Vous nous avez aussi mis en garde sur les PDF à ne pas versionner car Git aura tendance à écraser entièrement la version antérieur au lieu de la modifier en ne sauvegardant que ce qui diffère de la version suivante.\\
+
+Finalement, pour la prochaine fois, nous allons avancer sur la complexité et commencer à voir les quadtrees.\\
+
+
+
+
+
+\end{document}

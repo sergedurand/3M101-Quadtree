@@ -12,9 +12,9 @@
 
 \begin{document}
 
-\part{Les Arbres Binaires}
-\chapter{Description et vocabulaire des arbres binaires}
-\section{Définition générales sur les arbres}
+\section{Les Arbres Binaires}
+\subsection{Description et vocabulaire des arbres binaires}
+\subsubsection{Définitions générales sur les arbres}
 
 Un arbre est une structure de donnée hiérarchique définie par un nombre fini de nœuds. Chaque nœud porte un nom, appelé « étiquette » qui représente sa valeur ou l'information associée. On dit que chaque nœud est relié par une branche. \\
 On nomme des nœuds parents, enfants (ou fils), frères, ancêtres ou descendants, les nœuds d'un arbre de manière analogue à un arbre généalogique.\\
@@ -22,14 +22,23 @@ Le degré d'un nœud est défini par le nombre de fils qu'il possède. Le degré
 La taille d'un arbre est son nombre total de nœuds.\\
 Le chemin d'un nœud est une suite de nœuds qu'il faut emprunter pour parcourir l'arbre de la racine au nœud en question. On appelle la longueur d'un chemin, le nombre de nœuds empruntés.\\
 La hauteur (ou profondeur) d'un arbre est la longueur du chemin le plus long.\\
-On considère la racine de l'arbre comme de niveau 0 puis à chaque génération le niveau augmente de 1.\\
+On considère la racine de l'arbre comme de niveau 1 puis à chaque génération le niveau augmente de 1.\\
 
-\section{Les arbres ordonnés}
+\subsubsection{Les arbres ordonnés}
 
 On dit qu'un arbre est ordonné si tous ses nœuds ont une étiquette supérieure ou égale à celle de chacun de ses enfants s'ils existent. Ainsi, l'étiquette de la racine a la valeur maximale. Pour tout chemin de l'arbre, les étiquettes se succèdent dans un ordre décroissant.\\
 On définit un sous-arbre comme un autre arbre formé par un sous-ensemble de nœuds et de branches d'un arbre principal.\\
 
-\section{Particularité des arbres binaires}
+\subsubsection{Les arbres d'expression arithmétiques}
+
+Un arbre binaire d'expression est un genre d'arbre binaire utilisé pour représenter, comme son nom l'indique, des expressions. Il existe de types d'expression qu'un arbre binaire peut représenter : algébrique et booléenne.  \\ 
+Les feuilles d'un arbre binaire d'expression sont des quantités (constantes ou variables) et les autres nœuds sont des opérateurs (addition, multiplication...).\\
+Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine au valeurs obtenues en évaluant récursivement les sous-arbres de gauche et de droite.
+
+% insérer un arbre binaire d'expression
+
+  
+\subsection{Particularité des arbres binaires}
 
 Un arbre binaire peut à la fois ne contenir aucun nœud ou être composé de trois ensembles de nœuds disjoints que l'on appelle :
 \begin{enumerate}
@@ -44,7 +53,7 @@ Par exemple, dans l'arbre (a), le nœud « 2 » est le fils de gauche de la raci
 Si un sous-arbre est un arbre nul, on dit alors que le fils est absent ou manquant.\\
 
 \begin{center}
-\includegraphics[scale=1]{../../../../figure_1.jpg} 
+\includegraphics[scale=1]{../../../../../figure_1.jpg} 
 \captionof{figure}{Figure 1}
 \label{fig1}
 \end{center} 
@@ -54,7 +63,7 @@ La figure 1 représente des arbres binaires dessinés sous leur forme standard. 
 Cependant, un arbre binaire peut être associé à un arbre ordonné en ajoutant une représentation explicite des informations manquantes comme dans l'arbre (c). L'idée est de remplacer chaque enfant manquant de l'arbre binaire par un nœud n'ayant aucune descendance. Ces nœuds sont appelés des feuilles et sont représentés par des carrés dans l'arbre (c). On parle aussi de nœud externe pour une feuille en opposition aux nœuds internes. On obtient alors un arbre binaire complet : chaque nœud est soit une feuille soit a un degré égal à 2. Il n'y a pas de nœud de degré 1.\\
 
 
-\chapter{Bibliographie}
+\section{Bibliographie}
 
 
 Enumerative Combinatorics: De Richard P. Stanley \\
