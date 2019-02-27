@@ -92,36 +92,47 @@ class Arbre:
 			return False
 		return (self.gauche == None and self.droit == None)
 	
-	def suppressionMax(self):
-		#on cherche le noeud le plus à droite
-		while(self.droit is not None):
-			self = self.droit
-		#on le remplace par son sous arbre gauche
-		return self.gauche
 	
-	def suppressionRacine(self):
-		if self.clef is not None:
-			if self.gauche is not None:
-				self.clef = self.gauche.Max()
-				self.gauche.suppressionMax()
-				
 	
+	#suppression : on distingue les 3 possibilités en fonction
+	#du nombre d'enfant. On sépare les fonction pour la lisibilité
 	def suppression(self,x):
-		if self.clef == None:
-			return self
-		if x==self.clef:
-			if self.estFeuille():
-				return None
-			if Arbre.estVide(self.gauche):
-				return self.droit
-			if Arbre.estVide(self.droit):
-				return self.gauche
-			else:
-				y=self.gauche.Max()
-				return Arbre(y,self.gauche.suppression(y),self.droit)
-		if x<self.clef:
-			return Arbre(self.clef,self.gauche.suppression(x),self.droit)
-		return Arbre(self.clef,self.gauche,self.droit.suppression(x))
+		"""on fait l'hypothèse que x est forcément dans l'arbre"""
+		#cas 1 : arbre vide
+		if(self.clef is None):
+			return None
+		#appels récursifs:
+		if x < self.clef:
+			#self.gauche n'est pas vide puisque x est dans l'arbre
+			self.gauche = self.gauche.suppression(x)
+		elif x > self.clef:
+			self.droit = self.droit.suppression(x)
+		#on a trouvé le noeud qui a x pour clef
+		else:
+			#si x n'a qu'un fils (ou aucun):
+			if self.gauche is None:
+				#si le gauche est vide on retourne le fils droit directement
+				#qui est éventuellement vide
+				temp = self.droit
+				self = None
+				return temp
+			elif self.droit is None:
+				#même idée, sauf que self.gauche est forcément non vide ici
+				temp = self.gauche
+				self = None
+				return temp
+			else: #c'est le cas où les deux fils sont non vide
+				#le successeur de x est le plus petit élément de son sous arbre droit:
+				succ = self.droit.Min()
+				self.clef = succ
+				#il reste à supprimer succ de l'arbre droit :
+				self.droit = self.droit.suppression(succ)
+				
+		return self
+				
+			
+			
+	
 	
 	def hauteur(self):
 		"""convention : arbre vide de hauteur 0
