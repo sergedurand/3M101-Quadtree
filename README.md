@@ -4,6 +4,7 @@
  - LaTeX :
    - présentation de bibtex : https://fr.wikipedia.org/wiki/BibTeX, https://www.tuteurs.ens.fr/logiciels/latex/bibtex.html
    - génération du bibtex pour un article wikipedia : https://irl.github.io/bibwiki/
+   - tip sur bibtex : souvent le @ est déjà dispo, il faut chercher le nom de la référence + Bibtex sur google. Par exemple pour Introduction To Algorithms de Cormen & al. : https://dl.acm.org/citation.cfm?id=1614191 puis cliquer sur Bibtex dans "export format".
    - divers docs sur LaTeX http://www.edu.upmc.fr/c2i/ressources/latex/, https://fr.wikibooks.org/wiki/LaTeX/Structuration_du_texte
    - créer des arbres binaires en latex : https://github.com/MartinThoma/LaTeX-examples/tree/master/tikz/binary-tree
    - création de latex à partir de python : https://jeltef.github.io/PyLaTeX/current/examples/tikzdraw.html
