@@ -1,20 +1,20 @@
 # 3M101-Quadtree
 
  OUTILS :
- - présentation de bibtex : https://fr.wikipedia.org/wiki/BibTeX, 
- - https://www.tuteurs.ens.fr/logiciels/latex/bibtex.html
- - divers docs sur LaTeX : 
-    - http://www.edu.upmc.fr/c2i/ressources/latex/
-    - https://fr.wikibooks.org/wiki/LaTeX/Structuration_du_texte
- - créer des arbres binaires en latex : https://github.com/MartinThoma/LaTeX-examples/tree/master/tikz/binary-tree
- - création de latex à partir de python : https://jeltef.github.io/PyLaTeX/current/examples/tikzdraw.html
- - Arbres, arbre d'expression, arbre binaire de recherche http://pageperso.lif.univ-mrs.fr/~francois.denis/algoMPCI/chap1.pdf
- - Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
- - implémentation d'arbre binaires en python : https://www.laurentluce.com/posts/binary-search-tree-library-in-python/
-https://stackoverflow.com/questions/2598437/how-to-implement-a-binary-tree
-https://stackoverflow.com/questions/5444394/how-to-implement-a-binary-search-tree-in-python
- - biblothèque d'arbre binaire :
-https://pypi.org/project/binarytree/, https://pypi.org/project/bintrees/, https://github.com/TylerSandman/py-bst 
+ - LaTeX :
+  - présentation de bibtex : https://fr.wikipedia.org/wiki/BibTeX, https://www.tuteurs.ens.fr/logiciels/latex/bibtex.html
+  - génération du bibtex pour un article wikipedia : https://irl.github.io/bibwiki/
+  - divers docs sur LaTeX http://www.edu.upmc.fr/c2i/ressources/latex/, https://fr.wikibooks.org/wiki/LaTeX/Structuration_du_texte
+  - créer des arbres binaires en latex : https://github.com/MartinThoma/LaTeX-examples/tree/master/tikz/binary-tree
+  - création de latex à partir de python : https://jeltef.github.io/PyLaTeX/current/examples/tikzdraw.html
+  Arbres Binaires :
+  - Arbres, arbre d'expression, arbre binaire de recherche : http://pageperso.lif.univ-mrs.fr/~francois.denis/algoMPCI/chap1.pdf
+  - Convention de style pour Python : https://www.python.org/dev/peps/pep-0008/
+  - implémentation d'arbre binaires en python : https://www.laurentluce.com/posts/binary-search-tree-library-in-python/
+  https://stackoverflow.com/questions/2598437/how-to-implement-a-binary-tree
+  https://stackoverflow.com/questions/5444394/how-to-implement-a-binary-search-tree-in-python
+  - biblothèque d'arbre binaire :
+  https://pypi.org/project/binarytree/, https://pypi.org/project/bintrees/, https://github.com/TylerSandman/py-bst 
 
 TODO :
 - Description et vocabulaire arbres binaires (Charlotte)
