@@ -13,7 +13,7 @@
  - implémentation d'arbre binaires en python : https://www.laurentluce.com/posts/binary-search-tree-library-in-python/
 https://stackoverflow.com/questions/2598437/how-to-implement-a-binary-tree
 https://stackoverflow.com/questions/5444394/how-to-implement-a-binary-search-tree-in-python
-biblothèque d'arbre binaire :
+ - biblothèque d'arbre binaire :
 https://pypi.org/project/binarytree/, https://pypi.org/project/bintrees/, https://github.com/TylerSandman/py-bst 
 
 TODO :
