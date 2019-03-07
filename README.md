@@ -42,6 +42,7 @@ TODO :
 - faire des tests expérimentaux sur des arbres créé aléatoirement à partir d'une même liste (ordonnée différemment). Comparer les fonctions insertion et insertions classiques.
 - chercher applications quadtree region vs quadtree point
 - implémenter visualisation de quadtree region
+- un quadtree de hauteur n = image de taille ?? (n x n) ou (2
 
 - idées de trucs supplémentaire à chercher, sur la théorie : 
     - Nombre d'arbre binaire pour une taille n donnée ? (indice : nombres de catalan, mais ça marche que pour les arbres binaires entiers). 
