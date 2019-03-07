@@ -48,7 +48,7 @@ TODO :
     - Nombre d'arbre binaire pour une taille n donnée ? (indice : nombres de catalan, mais ça marche que pour les arbres binaires entiers). 
     - Nombre d'arbre binaire de recherche pour une taille n donnée ? 
     - Même question pour les quadtree.
-    - questions sur les hauteurs : espérance de la hauteur en fonction de la taille ? Variance ?
+    - questions sur les hauteurs : espérance de la hauteur en fonction de la taille ? Variance ? https://cs.stackexchange.com/questions/96448/average-height-of-a-bst-with-n-nodes
     
 
 
