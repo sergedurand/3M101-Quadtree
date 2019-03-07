@@ -16,6 +16,11 @@
   https://stackoverflow.com/questions/5444394/how-to-implement-a-binary-search-tree-in-python
   - biblothèque d'arbre binaire :
   https://pypi.org/project/binarytree/, https://pypi.org/project/bintrees/, https://github.com/TylerSandman/py-bst 
+  
+- Quadtree :
+  - https://kpully.github.io/Quadtrees/
+  - https://fr.wikipedia.org/wiki/Quadtree
+  - http://www.astroml.org/book_figures/chapter2/fig_quadtree_example.html
 
 TODO :
 - Description et vocabulaire arbres binaires (Charlotte)
@@ -35,6 +40,8 @@ TODO :
 - implémenter rotation + insertion avec rotation
 - implémenter une fonction "hauteur min" (calcul du chemin racine -> feuille de taille minimal) + une fonction calculant un coeff d'équilibrage (|hauteur - hauteur_min|)
 - faire des tests expérimentaux sur des arbres créé aléatoirement à partir d'une même liste (ordonnée différemment). Comparer les fonctions insertion et insertions classiques.
+- chercher applications quadtree region vs quadtree point
+- implémenter visualisation de quadtree region
 
 - idées de trucs supplémentaire à chercher, sur la théorie : 
     - Nombre d'arbre binaire pour une taille n donnée ? (indice : nombres de catalan, mais ça marche que pour les arbres binaires entiers). 
