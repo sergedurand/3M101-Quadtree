@@ -8,8 +8,80 @@
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{listings}
 \usepackage{hyperref}
 \usepackage{verbatim}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning, calc}
+\tikzstyle{vertex}=[draw,fill=white!15,circle,minimum size=20pt,inner sep=0pt]
+\usepackage{color}
+\definecolor{darkWhite}{rgb}{0.94,0.94,0.94}
+\lstset{
+  aboveskip=3mm,
+  belowskip=-2mm,
+  backgroundcolor=\color{darkWhite},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{red},
+  deletekeywords={...},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  framexleftmargin=16pt,
+  framextopmargin=3pt,
+  framexbottommargin=6pt,
+  frame=tb,
+  keepspaces=true,
+  keywordstyle=\color{blue},
+  language=python,
+  literate=
+  {²}{{\textsuperscript{2}}}1
+  {⁴}{{\textsuperscript{4}}}1
+  {⁶}{{\textsuperscript{6}}}1
+  {⁸}{{\textsuperscript{8}}}1
+  {€}{{\euro{}}}1
+  {é}{{\'e}}1
+  {è}{{\`{e}}}1
+  {ê}{{\^{e}}}1
+  {ë}{{\¨{e}}}1
+  {É}{{\'{E}}}1
+  {Ê}{{\^{E}}}1
+  {û}{{\^{u}}}1
+  {ù}{{\`{u}}}1
+  {â}{{\^{a}}}1
+  {à}{{\`{a}}}1
+  {á}{{\'{a}}}1
+  {ã}{{\~{a}}}1
+  {Á}{{\'{A}}}1
+  {Â}{{\^{A}}}1
+  {Ã}{{\~{A}}}1
+  {ç}{{\c{c}}}1
+  {Ç}{{\c{C}}}1
+  {õ}{{\~{o}}}1
+  {ó}{{\'{o}}}1
+  {ô}{{\^{o}}}1
+  {Õ}{{\~{O}}}1
+  {Ó}{{\'{O}}}1
+  {Ô}{{\^{O}}}1
+  {î}{{\^{i}}}1
+  {Î}{{\^{I}}}1
+  {í}{{\'{i}}}1
+  {Í}{{\~{Í}}}1,
+  morekeywords={*,...},
+  numbers=left,
+  numbersep=10pt,
+  numberstyle=\tiny\color{black},
+  rulecolor=\color{black},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  stepnumber=1,
+  stringstyle=\color{gray},
+  tabsize=4,
+  title=\lstname,
+}
 
 \begin{document}
 
@@ -38,7 +110,7 @@ Les autres nœuds sont des opérateurs : addition ($+$), soustraction ($-$), mul
 Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine au valeurs obtenues en évaluant récursivement les sous-arbres de gauche et de droite.
 
 \begin{center}
-	\includegraphics[scale=1]{../../../../../figure_2.png} 
+%	\includegraphics[scale=1]{../../../../../figure_2.png} 
 \end{center}
 
 
@@ -58,8 +130,8 @@ Par exemple, dans l'arbre (a), le nœud « 2 » est le fils de gauche de la raci
 Si un sous-arbre est un arbre nul, on dit alors que le fils est absent ou manquant.\\
 
 \begin{center}
-\includegraphics[scale=1]{../../../../../figure_1.jpg} 
-\captionof{figure}{Figure 1}
+% \includegraphics[scale=1]{../../../../../figure_1.jpg} 
+% \captionof{figure}{Figure 1}
 \label{fig1}
 \end{center} 
 
@@ -121,6 +193,13 @@ def parcours_prefixe(arbre):
 	sinon:
 	retouner [ racine(arbre) + parcours_prefixe(sous-arbre gauche) +  parcours_prefixe(sous-arbre droit)  ]
 \end{comment}
+\begin{lstlisting}
+def parcours_prefixe(arbre):
+	if arbre vide:
+		return []
+	else:
+		return [racine(arbre) + parcours_prefixe(sous-arbre gauche) + parcours_prefixe(sous arbre droit)]
+\end{lstlisting}
 
 
 
