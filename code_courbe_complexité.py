@@ -218,12 +218,12 @@ def graphe(L1,L2): #graphe obtenu par les mesures
     fig.savefig('CalculRecherche.png')
     plt.show()
 
-"""(L1,L2) = testMasseRecherche(100)
+(L1,L2) = testMasseRecherche(100)
 graphe(L1,L2)
 for i,e in enumerate(L1):
     sheet1.write(i,1,e)
 for i,e in enumerate(L2):
     sheet1.write(i,2,e)
-name = "finalsuppression.xls"
+name = "finalrecherche.xls"
 book.save(name)
-book.save(TemporaryFile())"""
+book.save(TemporaryFile())
