@@ -1,0 +1,136 @@
+\documentclass{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{verbatim}
+
+\begin{document}
+
+\section{Les Arbres Binaires}
+\subsection{Description et vocabulaire des arbres binaires}
+\subsubsection{Définitions générales sur les arbres}
+
+Un arbre est une structure de donnée hiérarchique définie par un nombre fini de nœuds. Chaque nœud porte un nom, appelé « étiquette » qui représente sa valeur ou l'information associée. On dit que chaque nœud est relié par une branche. \\
+On nomme des nœuds parents, enfants (ou fils), frères, ancêtres ou descendants, les nœuds d'un arbre de manière analogue à un arbre généalogique.\\
+Le degré d'un nœud est défini par le nombre de fils qu'il possède. Le degré maximal correspond au degré de l'arbre.\\
+La taille d'un arbre est son nombre total de nœuds.\\
+Le chemin d'un nœud est une suite de nœuds qu'il faut emprunter pour parcourir l'arbre de la racine au nœud en question. On appelle la longueur d'un chemin, le nombre de nœuds empruntés.\\
+La hauteur (ou profondeur) d'un arbre est la longueur du chemin le plus long.\\
+On considère la racine de l'arbre comme de niveau 1 puis à chaque génération le niveau augmente de 1.\\
+
+\subsubsection{Les arbres ordonnés}
+
+On dit qu'un arbre est ordonné si tous ses nœuds ont une étiquette supérieure ou égale à celle de chacun de ses enfants s'ils existent. Ainsi, l'étiquette de la racine a la valeur maximale. Pour tout chemin de l'arbre, les étiquettes se succèdent dans un ordre décroissant.\\
+On définit un sous-arbre comme un autre arbre formé par un sous-ensemble de nœuds et de branches d'un arbre principal.\\
+
+\subsubsection{Les arbres d'expression arithmétiques}
+
+Un arbre binaire d'expression est un genre d'arbre binaire utilisé pour représenter, comme son nom l'indique, des expressions. Il existe de types d'expression qu'un arbre binaire peut représenter : algébrique et booléenne.  \\ 
+Les feuilles d'un arbre binaire d'expression sont des quantités (constantes ou variables) numérique dans le cas algébrique et "vrai" ou "faux" dans le cas booléen.\\
+Les autres nœuds sont des opérateurs : addition ($+$), soustraction ($-$), multiplication ($\times$), division($\div$) et puissance ($\ldots^{\ldots}$) dans le cas algébrique et "et" ($\wedge$), "ou" ($\vee$) et la négation ($\neg$) dans le cas booléen.\\
+Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine au valeurs obtenues en évaluant récursivement les sous-arbres de gauche et de droite.
+
+\begin{center}
+	\includegraphics[scale=1]{../../../../../figure_2.png} 
+\end{center}
+
+
+  
+\subsection{Particularité des arbres binaires}
+
+Un arbre binaire peut à la fois ne contenir aucun nœud ou être composé de trois ensembles de nœuds disjoints que l'on appelle :
+\begin{enumerate}
+\item un nœud racine;
+\item un sous-arbre de gauche;
+\item un sous-arbre de droit.
+\end{enumerate}
+
+Un arbre binaire qui ne contient pas de nœuds est appelé un arbre vide ou un arbre nul.\\
+Si le sous-arbre de gauche n'est pas vide, sa racine est appelée le fils gauche de la racine de l'arbre entier. Il en va de même pour le sous-arbre de droite.\\
+Par exemple, dans l'arbre (a), le nœud « 2 » est le fils de gauche de la racine de l'arbre, il est aussi la racine du sous-arbre de gauche.\\
+Si un sous-arbre est un arbre nul, on dit alors que le fils est absent ou manquant.\\
+
+\begin{center}
+\includegraphics[scale=1]{../../../../../figure_1.jpg} 
+\captionof{figure}{Figure 1}
+\label{fig1}
+\end{center} 
+
+Un arbre binaire n'est pas seulement un arbre ordonné où chaque nœud a un degré maximal de 2.  En effet, pour une racine n'ayant qu'un seul fils, sa position, s'il s'agit du fils de gauche ou du fils de droite, importe contrairement à un arbre ordonné.\\
+La figure 1 représente des arbres binaires dessinés sous leur forme standard. Attention, l'arbre (a) est différent de l'arbre (b) quand ils sont considérés comme des arbres binaires, mais en tant que arbres classiques, ils sont identiques.\\
+Cependant, un arbre binaire peut être associé à un arbre ordonné en ajoutant une représentation explicite des informations manquantes comme dans l'arbre (c). L'idée est de remplacer chaque enfant manquant de l'arbre binaire par un nœud n'ayant aucune descendance. Ces nœuds sont appelés des feuilles et sont représentés par des carrés dans l'arbre (c). On parle aussi de nœud externe pour une feuille en opposition aux nœuds internes. On obtient alors un arbre binaire complet : chaque nœud est soit une feuille soit a un degré égal à 2. Il n'y a pas de nœud de degré 1.\\
+
+
+\subsection{Les arbres binaires de recherche}
+\subsubsection{Affichage}
+
+Parcours en largueur : \\
+~\\
+Le principe d'un parcours en largeur est de lister les noeuds de l'arbre niveau par niveau en commençant par les nœuds de niveau 0 puis les nœuds de niveau 1 et ainsi de suite. Dans chaque niveau, les nœuds sont parcourus de gauche à droite.\\ 
+
+%insérer un arbre et donner son parcours en largueur
+
+L'algorithme d'un tel parcours se fait à l'aide d'une file (premier entré, premier sorti).\\
+Pseudo code : \\
+\begin{comment}
+def parcours_largueur(arbre):
+	si arbre vide :
+	retourner liste vide
+	sinon:
+	retouner [  racine(arbre) + racine(sous-arbre gauche) + racine(sous-arbre droit)  ]
+\end{comment}
+~\\
+Parcours en profondeur :\\
+~\\
+Le principe d'un parcours en profondeur est de lister les noeuds de l'arbre récursivement à partir de la racine puis les sous-arbres gauches et droits de cette racine et ainsi de suite pour la totalité de l'arbre.\\
+Il existe plusieurs types de parcours en profondeur : Infixe, Sufixe et Préfixe.\\
+Infixe : \\
+Le parcours infixe consiste à lister les noeuds en partant du sous-arbre gauche puis remonter à sa racine et enfin parcourir le sous-abre droit.\\
+Pseudo code:\\
+\begin{comment}
+def parcours_infixe(arbre):
+	si arbre vide :
+	retourner liste vide
+	sinon:
+	retourner [  parcours_infixe(sous-arbre gauche) + racine(arbre) + parcours_infixe(sous-arbre droit)  ]
+\end{comment}
+Suffixe :\\
+Le parcours suffixe consiste quant à lui à lister les noeuds depuis le sous-arbre gauche puis le sous-arbre droit et enfin remonter à la racine.
+Pseudo code:\\
+\begin{comment}
+def parcours_suffixe(arbre):
+	si arbre vide :
+	retourner liste vide
+	sinon:
+	retouner [ parcours_suffixe(sous-arbre gauche) +  parcours_suffixe(sous-arbre droit) + racine(arbre)  ]
+\end{comment}
+Préfixe : \\
+Le parcours préfixe, finalement, consiste à lister les noeuds en commançant par la racine puis le sous-abre gauchet et enfin le sous-abre droit.\\
+Pseudo code:\\
+\begin{comment}
+def parcours_prefixe(arbre):
+	si arbre vide :
+	retourner liste vide
+	sinon:
+	retouner [ racine(arbre) + parcours_prefixe(sous-arbre gauche) +  parcours_prefixe(sous-arbre droit)  ]
+\end{comment}
+
+
+
+\section{Bibliographie}
+
+
+Enumerative Combinatorics: De Richard P. Stanley \\
+\url{https://en.wikipedia.org/wiki/Tree_(graph_theory)}\\
+Introduction to algorithms Cormen\\
+\url{http://mescal.imag.fr/membres/jean-marc.vincent/index.html/ProTer/Algorithmes-Classiques/Heapsort.pdf}\\
+
+\listoffigures
+\end{document}
