@@ -92,13 +92,22 @@
 
 \tableofcontents
 \newpage
+\section{Notations de Landau}
+Pour la description des algorithmes et l'analyse de leur complexité on utilisera les notations usuelles (de Landau). On les rappelle ici :
+$f$ et $g$ désignent des fonctions de $\mathbb{N}$ dans $\mathbb{N}$.
+\begin{itemize}
+\item $f \in \mathcal{O}(g)$ si $\exists D > 0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, f(n) \leq Dg(n)$
+\item $f \in \Omega(g)$ si $\exists C >0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n)$.
+\item $f \in \Theta(g)$ si $\exists C>0, D>0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n) \leq Dg(n)$.
+\end{itemize}
 
+Autrement dit : $f \in \mathcal{O}(g)$ si f est inférieure à g à partir d'un certain rang, à une constante multiplicative près. 
+De plus on remarque que $f \in \mathcal{O}(g) \iff g \in \Omega(f)$ et $f \in \Theta(g) \iff (f \in \mathcal{O}(g)$ et $f \in \Omega(g))$.
 \section{Arbre Binaires}
 \subsection{Description}
-\subsection{Arbres binaires de recherche }
-\subsubsection{méthodes principales}
-\paragraph{a. suppression :}
-~\\
+\section{Arbres binaires de recherche }
+\subsection{méthodes principales}
+\subsubsection{suppression}
 La fonction de suppression se fait de manière récursive. Elle est assez simple mais il faut juste faire attention à ne pas perdre des informations ou à modifier la structure d'arbre :
 \\L'algorithme est le suivant:
 \\soit x l'élément qu'on veut supprimer :
@@ -109,8 +118,7 @@ La fonction de suppression se fait de manière récursive. Elle est assez simple
 a gauche du sous arbre droit), puis on supprime le max ou le min d'après ce qu'on a choisit en faisant un appel récursif .
 \\- si x est plus petit que la racine on fait un appel récursif sur le sous arbre gauche 
 \\- si x est plus grand on fait un appel récursif sur le sous arbre droit .
-\paragraph{b. recherche :} 
-~\\
+\subsubsection{recherche :} 
 La recherche se fait aussi de manière récursive l'algorithme est assez simple :
 \\soit x l'élément qu'on cherche
 \\- on regarde si x est égale à la racine dans ce cas on renvoi directement la racine 
@@ -168,7 +176,7 @@ Par exemple l'arbre suivant :
 \begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1}]
 \node [vertex] {$5$}
   child {
-    node [vertex,fill=red!15]  {$2$}
+    node [vertex]  {$2$}
     child{edge from parent[draw=none]}
     child{node [vertex] {$3$}}
    }
