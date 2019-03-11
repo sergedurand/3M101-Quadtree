@@ -21,6 +21,9 @@
   - https://kpully.github.io/Quadtrees/
   - https://fr.wikipedia.org/wiki/Quadtree
   - http://www.astroml.org/book_figures/chapter2/fig_quadtree_example.html
+  
+- Mesures expérimentales :
+  - https://stackoverflow.com/questions/3433486/how-to-do-exponential-and-logarithmic-curve-fitting-in-python-i-found-only-poly pour la régression logarithmique. L'idée est de faire une régression polynomiale sur log(x) comme suggéré par M. Thierry
 
 TODO :
 - Description et vocabulaire arbres binaires (Charlotte)
