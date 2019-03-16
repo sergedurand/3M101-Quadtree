@@ -1,7 +1,9 @@
 # 3M101-Quadtree
 
  OUTILS :
+ 
  - LaTeX :
+   - Lien overleaf : https://fr.overleaf.com/project/5c88fbf71448113af5bddde5
    - présentation de bibtex : https://fr.wikipedia.org/wiki/BibTeX, https://www.tuteurs.ens.fr/logiciels/latex/bibtex.html
    - tip sur bibtex : souvent le code bib est déjà dispo, pas besoin de le réécrire, il faut chercher le nom de la référence + Bibtex sur google. Par exemple pour Introduction To Algorithms de Cormen & al. : https://dl.acm.org/citation.cfm?id=1614191 puis cliquer sur Bibtex dans "export format".
    - pour l'insertion du fichier bib : \bibliography{../../biblio} à mettre en haut de votre doc .TeX chaque "../" correspondant au niveau dans l'arborescence des dossiers. le .bib est à la racine, si le .TeX est dans un sous dossier il faut mettre qu'un "../"
