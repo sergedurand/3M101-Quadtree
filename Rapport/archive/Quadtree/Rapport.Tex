@@ -1,7 +1,6 @@
 \documentclass{report}
 \usepackage{geometry}
- \usepackage[frenchb]{babel}
- \usepackage{caption}
+\usepackage{caption}
 \usepackage{subcaption} 
 \geometry{hmargin = 2cm,vmargin = 2cm}
 \usepackage[utf8]{inputenc}
@@ -10,10 +9,8 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{stmaryrd}
 \usepackage{mathrsfs}
 \usepackage{graphicx}
-\usepackage{hyperref} 
 \usepackage{url}
 \usepackage{pgfplotstable}
 \usepackage{listings}
@@ -92,53 +89,58 @@
 %par pdflatex -synctex=1 -interaction=nonstopmode --shell-escape %.tex
 
 %pour la gestion des théorème : 
-\newtheorem*{theo}{\textbf{Théorème}}
-\newtheorem{definition}{Définition}
-\newtheorem*{petiteprop}{Proposition}
-\newtheorem*{cor}{Corollaire}
-\def\proofname{Preuve}
+\newtheorem{theo}{\textbf{Théorème}}
+\newtheorem{def}{Définition}
+\addto\captionsfrench{\renewcommand\proofname{Preuve}}
 
-\title{Quadtree 3M101}
+\title{Quadtree}
 \author{Thiziri Baiche \and Charlotte Briquet \and Serge Durand \and Kevin Meetooa}
 \graphicspath{ {./images/} }
 \begin{document}
 \maketitle
 \tableofcontents
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction}
-Les arbres sont une structure de donnée classique, aux nombreuses variations et applications. Notre objectif pour ce projet est d'étudier et d'implémenter des quadtree \footnote{nous utiliserons le terme quadtree dans le reste du rapport, préféré au terme "arbre quaternaire", pas très joli...}, avec plusieurs applications concrètes. Pour bien comprendre les quadtree nous devons d'abord étudier les arbres binaires. Après avoir introduit les notions et le vocabulaire de base sur les arbres binaires nous étudierons en particulier les arbres binaires de recherche avec une première implémentation. En effet les quadtree peuvent être vu comme une extension des arbres binaires de recherche. Nous présentons également des mesures expérimentales de la complexité des méthodes implémentées.
+\section{Introduction}
+Les arbres sont une structure de donnée classique, aux nombreuses variations et applications. Notre objectif pour ce projet est d'étudier et d'implémenter des quadtree \footnote{nous utiliserons le terme quadtree dans le reste du rapport, préféré au terme "arbre quaternaire", pas très joli...}, avec plusieurs applications concrètes. Pour bien comprendre les quadtree nous devons d'abord présenter les arbres binaires. Après avoir introduit les notions et le vocabulaire de base sur les arbres binaires nous étudierons en particulier les arbres binaires de recherche avec une première implémentation. En effet les quadtree peuvent être vu comme une extension des arbres binaires de recherche. Nous présentons également des mesures expérimentales de la complexité des méthodes implémentées.
+\section{Notations de Landau}
+Pour la description des algorithmes et l'analyse de leur complexité on utilisera les notations usuelles (de Landau). On les rappelle ici :
+$f$ et $g$ désignent des fonctions de $\mathbb{N}$ dans $\mathbb{N}$.
+\begin{itemize}
+\item $f \in \mathcal{O}(g)$ si $\exists D > 0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, f(n) \leq Dg(n)$
+\item $f \in \Omega(g)$ si $\exists C >0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n)$.
+\item $f \in \Theta(g)$ si $\exists C>0, D>0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n) \leq Dg(n)$.
+\end{itemize}
 
-\chapter{Les Arbres Binaires}
-\section{Description et vocabulaire des arbres binaires}
-\subsection{Définitions générales sur les arbres}
+Autrement dit : $f \in \mathcal{O}(g)$ si f est inférieure à g à partir d'un certain rang, à une constante multiplicative près. 
+De plus on remarque que $f \in \mathcal{O}(g) \iff g \in \Omega(f)$ et $f \in \Theta(g) \iff (f \in \mathcal{O}(g)$ et $f \in \Omega(g))$.
+\section{Les Arbres Binaires}
+\subsection{Description et vocabulaire des arbres binaires}
+\subsubsection{Définitions générales sur les arbres}
 
-Un \textit{arbre} est une structure de donnée hiérarchique définie par un nombre fini de nœuds. Chaque \textit{nœud} est composé d'une \textit{clef} (appelée également \textit{étiquette}) qui représente sa valeur ou l'information associée, et d'un ensemble de références vers d'autres noeuds. On dirat que l'arbre est \textit{étiqueté} sur l'ensemble E si ses étiquettes appartiennent à l'ensemble E. On dit que chaque nœud est relié par une \textit{branche}. 
+Un \textit{arbre} est une structure de donnée hiérarchique définie par un nombre fini de nœuds. Chaque \textit{nœud} est composé d'une \textit{clef} (appelée également \textit{étiquette}) qui représente sa valeur ou l'information associée, et d'un ensemble de références vers d'autres noeuds. On dit que chaque nœud est relié par une \textit{branche}. 
 On nomme des nœuds \textit{parents}, \textit{enfants} ou \textit{fils}, \textit{frères}, \textit{ancêtres} ou \textit{descendants}, les nœuds d'un arbre de manière analogue à un arbre généalogique. Dans un arbre, binaire ou non, un noeud a exactement un parent, sauf la \textit{racine} qui n'en a aucun : c'est la particularité de cette structure et ce qui donne le nom d'arbre. 
-
 On dit qu'un noeud qui n'a aucun fils est une \textit{feuille}.
 Le \textit{degré} d'un nœud est défini par le nombre de fils qu'il possède. Le degré maximal correspond au degré de l'arbre.
 Un arbre \textbf{binaire} est donc un arbre de degré deux, c'est à dire que chaque noeud a au plus deux fils.
 La \textit{taille} d'un arbre est son nombre total de nœuds.
 Le \textit{chemin} d'un nœud est une suite de nœuds qu'il faut emprunter pour parcourir l'arbre de la racine au nœud en question. On appelle la \textit{longueur} d'un chemin, le nombre de nœuds empruntés.
-
 La \textit{hauteur} (ou profondeur) d'un arbre est la longueur du chemin le plus long.
 On considère la racine de l'arbre comme de niveau 1 puis à chaque génération le niveau augmente de 1.
 On définit un \textit{sous-arbre} comme un autre arbre formé par un sous-ensemble de nœuds et de branches d'un arbre principal. En effet on peut considérer le fils d'un noeud comme la racine d'un nouvel arbre, un sous-arbre donc. 
+
 Voilà quelques exemples d'arbres :
 
-\subsection{Les arbres ordonnés}
+\subsubsection{Les arbres ordonnés}
 
-On dit qu'un arbre étiqueté sur un ensemble muni d'une relation d'ordre totale est \textit{ordonné} si tous ses nœuds ont une étiquette supérieure ou égale à celle de chacun de ses enfants s'ils existent. Ainsi, l'étiquette de la racine a la valeur maximale. Pour tout chemin de l'arbre, les étiquettes se succèdent dans un ordre décroissant.
+On dit qu'un arbre est \textit{ordonné} si tous ses nœuds ont une étiquette supérieure ou égale à celle de chacun de ses enfants s'ils existent. Ainsi, l'étiquette de la racine a la valeur maximale. Pour tout chemin de l'arbre, les étiquettes se succèdent dans un ordre décroissant.
 
-On appelle \textit{tas} ou \textit{arbre tassé} un arbre binaire ordonné presque complet : tous les niveaux de l'arbre binaire sont remplis, sauf peut-être le dernier qui est éventuellement rempli sur la gauche. On parle aussi d'arbre \textit{parfait}. La structure de tas est notamment utilisée pour le tri par tas. 
+On appelle \textit{tas} ou \textit{arbre tassé} un arbre binaire ordonné presque complet : tous les niveaux de l'arbre binaire sont remplis, sauf peut-être le dernier qui est éventuellement rempli sur la gauche. On parle aussi d'arbre parfait. La structure de tas est notamment utilisée pour le tri par tas. 
 
-\subsection{Les arbres d'expression arithmétiques}
+\subsubsection{Les arbres d'expression arithmétiques}
 
 Un \textit{arbre binaire d'expression} est un genre d'arbre binaire utilisé pour représenter, comme son nom l'indique, des expressions. Il existe deux types d'expression qu'un arbre binaire peut représenter : algébrique et booléenne.
 Les feuilles d'un arbre binaire d'expression sont des quantités (constantes ou variables) numérique dans le cas algébrique et "vrai" ($T$) ou "faux" ($F$) dans le cas booléen.
 Les nœuds internes sont des opérateurs : addition ($+$), soustraction ($-$), multiplication ($\times$), division($\div$) et puissance ($\ldots^{\ldots}$) dans le cas algébrique ou des quantificateurs : "et" ($\wedge$), "ou" ($\vee$) et la négation ($\neg$) dans le cas booléen.
-Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine au valeurs obtenues en évaluant récursivement les sous-arbres de gauche et de droite, via un parcours \hyperref[suffixe]{suffixe}. 
-
+Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine au valeurs obtenues en évaluant récursivement les sous-arbres de gauche et de droite, via un parcours postfixe. 
 \begin{figure}[h]
 \begin{center}
 \begin{tikzpicture}[xscale=1,yscale=1]
@@ -216,7 +218,7 @@ Un arbre d'expression est alors évalué en appliquant l'opérateur de la racine
 \end{figure}
 
 
-\section{Particularité des arbres binaires}
+\subsection{Particularité des arbres binaires}
 
 On donne la définition inductive de l'ensemble des arbres binaires étiqueté sur un ensemble E, qu'on note AB:
 \begin{flushleft}
@@ -224,7 +226,7 @@ On donne la définition inductive de l'ensemble des arbres binaires étiqueté s
     \underline{Base :}
     
 \end{flushleft}
-$\emptyset \in AB$
+$\emptyset \in AB$ et $\forall x \in E, (x,\emptyset,\emptyset) \in AB$
 \begin{flushleft}
     \bf
     \underline{Induction :}
@@ -276,210 +278,104 @@ Si un sous-arbre est un arbre nul, on dit alors que le fils est absent ou manqua
 \caption{Arbre (a)} \label{fig:Exemples d'arbres}
 \end{figure}
 
-\subsection{Premiers algorithmes}
-\subsubsection{Notations de Landau}
-Pour la description des algorithmes et l'analyse de leur complexité on utilisera les notations usuelles (de Landau). On les rappelle ici :
-$f$ et $g$ désignent des fonctions de $\mathbb{N}$ dans $\mathbb{N}$.
-\begin{itemize}
-\item $f \in \mathcal{O}(g)$ si $\exists D > 0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, f(n) \leq Dg(n)$
-\item $f \in \Omega(g)$ si $\exists C >0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n)$.
-\item $f \in \Theta(g)$ si $\exists C>0, D>0$ et $n_0 \geq 0$ tels que $\forall n \geq n_0, Cg(n) \leq f(n) \leq Dg(n)$.
-\end{itemize}
-
-Autrement dit : $f \in \mathcal{O}(g)$ si f est inférieure à g à partir d'un certain rang, à une constante multiplicative près. 
-De plus on remarque que $f \in \mathcal{O}(g) \iff g \in \Omega(f)$ et $f \in \Theta(g) \iff (f \in \mathcal{O}(g)$ et $f \in \Omega(g))$.
-\subsubsection{calcul de la hauteur et de la taille}
-\paragraph{}
-Donnons d'abord des définitions inductives de la hauteur et de la taille d'un arbre. Nous notons $h(T)$ la hauteur de l'arbre T, et $n(T)$ sa taille. On a :
-\begin{flushleft}
-    \bf
-    \underline{Base :}
-    
-\end{flushleft}
-$h(\emptyset) = 0$ \\
-$n(\emptyset) = 0$ \\
-\begin{flushleft}
-    \bf
-    \underline{Induction :}
-\end{flushleft}
-    $\forall x \in E, G \in AB, D \in AB$ : \\
-    $h((x,G,D))= max(h(G),h(D))+1$ \\
-    $n((x,G,D))= n(G)+n(D)+1$
-    
-\paragraph{}
-Suivant cette définition, pour calculer la hauteur d'un arbre on peut utiliser la fonction récursive suivante :
-\begin{lstlisting}
-def hauteur(self):
-		"""convention : arbre vide de hauteur 0
-		arbre réduit à un noeud : hauteur 1"""
-		if self.clef == None:
-			return 0
-		if self.gauche is None and self.droit is None:
-			return 1
-		return max(self.gauche.hauteur(),self.droit.hauteur())+1
-\end{lstlisting}
-\paragraph{Complexité, terminaison et correction :} On fait une preuve détaillée pour la terminaison, la correction et la complexité de cette méthode.
-Pour le calcul de la complexité on compte le nombre d'addition. On pose $c(n) = $ le nombre d'addition lors de l'appel $hauteur(T)$ sur un arbre $T$ de taille $n$. On montre par induction sur l'ensemble $AB$ que $c(n) = n$ pour tout $T \in AB$ tel que $n(T) = n$, et aussi que la fonction se termine et est correcte.
-
-\begin{flushleft}
-    \bf
-    \underline{Base :}
-    
-\end{flushleft}
-$h(\emptyset) = 0$ \\ 
-L'appel retourne $0$ directement, il n'y a aucune addition : $c(0) = 0$. La fonction se termine et est correcte.
-\begin{flushleft}
-    \bf
-    \underline{Induction :}
-\end{flushleft}
-On fait une récurrence forte : supposons que $\forall k \in \llbracket 0, n-1 \rrbracket, c(k) = k$, c'est à dire que l'appel $hauteur(A)$ comporte $k$ additions pour tout arbre $A$ de hauteur $k$ et qu'il se termine et retourne $h(A)$
-
-Soit $T = (x,T_1,T_2)$ tel que $n(T) = n$. On pose $n_1 = n(T_1)$ et $n_2=n(T_2)$. On a $n_1 + n_2 + 1 = n$ donc $(n_1,n_2) \in {\llbracket 0, n-1 \rrbracket}^2$. 
-
-Puisque T n'est pas vide on distingue deux cas pour l'appel $hauteur(T)$ provoque deux appels récursifs : $hauteur(T_1)$ et $hauteur(T_2)$ et renvoie 1 + le max des valeurs retournées par ces appels. Or par hypothèse de récurrence les appels $hauteur(T_1)$ et $hauteur(T_2)$ se terminent, renvoient respectivement $h(T_1)$ et $h(T_2)$ et comportent respectivement $n_1$ et $n_2$ additions. Donc l'appel hauteur(T) se termine, renvoie $max(h(T_1),h(T_2))+1 = h(T)$ et comporte $n_1 + n_2 + 1 = n$ additions.
-\begin{flushleft}
-    \bf
-    \underline{Conclusion :}
-\end{flushleft}
-
-On a montré que la propriété est vraie pour $T = \emptyset$, et que si elle est vraie pour tout $A \in AB$ tel que $n(A) < n$ alors elle est vraie pour tout $T \in AB$ tel que $n(T) = n$. En conclusion la propriété est vraie pour tout arbre binaire.
-
-En pratique on a dû distinguer le cas où T est réduit à un noeud, les appels T.hauteur() ne fonctionnant pas en Python si T est None, mais cela n'a pas d'impact sur la complexité.
-
-La méthode pour calculer la taille d'un arbre peut être implémentée de manière récursive également, avec un résultat et une preuve analogue sur la complexité, le nombre d'additions étant alors 2n pour un arbre de taille n.
-
-\section{Relations entre hauteur et taille}
-
-On rappelle qu'un arbre complet est un arbre dont tout les nœuds internes ont deux fils. 
-C'est un arbre entièrement rempli.
-Un arbre parfait est un arbre dont tout les niveaux sont remplis sauf éventuellement le dernier, en général rempli le plus à gauche. 
-On introduit également la notion d' \textit{arbre H-équilibré} : arbre dont la différence de profondeur entre deux feuilles est au plus 1. Tout les niveaux sont donc rempli sauf le dernier ici aussi, sans condition sur la répartition des feuilles du dernier niveau. 
-
-Illustration : 
-
 \begin{figure}[h]
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-\begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1},scale=0.8]
-\node [vertex] {$15$}
-   child {
-    node [vertex]  {$7$}
-    child{node [vertex] {$6$}}
-    child{node [vertex] {$10$}}
-   }
-   child {
-    node [vertex] {$17$}
-    child{node [vertex] {$16$}}	
-    child{node [vertex] {$20$}}
-   };
+\begin{center}
+\begin{tikzpicture}[xscale=1,yscale=1]
+\tikzstyle{fleche}=[->,>=latex,thick]
+\tikzstyle{noeud}=[fill=white,circle]
+\tikzstyle{feuille}=[fill=white,circle]
+\def\DistanceInterNiveaux{1}
+\def\DistanceInterFeuilles{1}
+\def\NiveauA{(-0)*\DistanceInterNiveaux}
+\def\NiveauB{(-1)*\DistanceInterNiveaux}
+\def\NiveauC{(-2)*\DistanceInterNiveaux}
+\def\NiveauD{(-3)*\DistanceInterNiveaux}
+\def\InterFeuilles{(1)*\DistanceInterFeuilles}
+\node[noeud] (R) at ({(2)*\InterFeuilles},{\NiveauA}) {$3$};
+\node[noeud] (Ra) at ({(1)*\InterFeuilles},{\NiveauB}) {$2$};
+\node[noeud] (Raa) at ({(0.5)*\InterFeuilles},{\NiveauC}) {$1$};
+\node[feuille] (Raaa) at ({(0)*\InterFeuilles},{\NiveauD}) {};
+\node[feuille] (Raab) at ({(1)*\InterFeuilles},{\NiveauD}) {$6$};
+\node[feuille] (Rab) at ({(2)*\InterFeuilles},{\NiveauC}) {$4$};
+\node[noeud] (Rb) at ({(3.5)*\InterFeuilles},{\NiveauB}) {$7$};
+\node[feuille] (Rba) at ({(3)*\InterFeuilles},{\NiveauC}) {};
+\node[feuille] (Rbb) at ({(4)*\InterFeuilles},{\NiveauC}) {$5$};
+\draw[fleche] (R)--(Ra);
+\draw[fleche] (Ra)--(Raa);
+\draw[fleche] (Raa)--(Raab);
+\draw[fleche] (Ra)--(Rab);
+\draw[fleche] (R)--(Rb);
+\draw[fleche] (Rb)--(Rbb);
 \end{tikzpicture}
-\caption{arbre complet}
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1},scale=0.8]
-\node [vertex] {$15$}
-   child {
-    node [vertex]  {$7$}
-    child{node [vertex] {$6$}}
-    child{ edge from parent[draw=none]}
-   }
-   child {
-    node [vertex] {$17$}
-    child{ edge from parent[draw=none]}	
-    child{ edge from parent[draw=none]}
-   };
-\end{tikzpicture}
-\caption{arbre parfait}
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{tikzpicture}[very thick,level/.style={sibling distance=30mm/#1},scale=0.8]
-\node [vertex] {$10$}
-   child {
-    node [vertex]  {$7$}
-    child{node [vertex] {$6$}}
-    child{ edge from parent[draw=none]}
-   }
-   child {
-    node [vertex] {$17$}
-    child{node [vertex] {$16$}}	
-    child{node [vertex] {$20$}}
-   };
-\end{tikzpicture}
-\caption{arbre H-équilibré}
-\end{subfigure}
+\end{center}
+\caption{Arbre (b)} \label{fig:Exemples d'arbres}
 \end{figure}
 
-On remarque que tout arbre binaire $(x,G,D)$ est complet si et seulement si $G$ et $D$ sont complets et de même hauteur.
+\begin{figure}[h]
+\begin{center}
+\begin{tikzpicture}[xscale=1,yscale=1]
+\tikzstyle{fleche}=[->,>=latex,thick]
+\tikzstyle{noeud}=[fill=white,circle]
+\tikzstyle{feuille}=[fill=gray,draw]
+\def\DistanceInterNiveaux{1}
+\def\DistanceInterFeuilles{1}
+\def\NiveauA{(-0)*\DistanceInterNiveaux}
+\def\NiveauB{(-1)*\DistanceInterNiveaux}
+\def\NiveauC{(-2)*\DistanceInterNiveaux}
+\def\NiveauD{(-3)*\DistanceInterNiveaux}
+\def\NiveauE{(-4)*\DistanceInterNiveaux}
+\def\InterFeuilles{(1)*\DistanceInterFeuilles}
+\node[noeud] (R) at ({(3.5)*\InterFeuilles},{\NiveauA}) {$3$};
+\node[noeud] (Ra) at ({(2)*\InterFeuilles},{\NiveauB}) {$2$};
+\node[noeud] (Raa) at ({(1)*\InterFeuilles},{\NiveauC}) {$1$};
+\node[noeud] (Raaa) at ({(0.5)*\InterFeuilles},{\NiveauD}) {$6$};
+\node[feuille] (Raaaa) at ({(0)*\InterFeuilles},{\NiveauE}) {};
+\node[feuille] (Raaab) at ({(1)*\InterFeuilles},{\NiveauE}) {};
+\node[feuille] (Raab) at ({(2)*\InterFeuilles},{\NiveauD}) {};
+\node[noeud] (Rab) at ({(3.5)*\InterFeuilles},{\NiveauC}) {$4$};
+\node[feuille] (Raba) at ({(3)*\InterFeuilles},{\NiveauD}) {};
+\node[feuille] (Rabb) at ({(4)*\InterFeuilles},{\NiveauD}) {};
+\node[noeud] (Rb) at ({(6)*\InterFeuilles},{\NiveauB}) {$7$};
+\node[feuille] (Rba) at ({(5)*\InterFeuilles},{\NiveauC}) {};
+\node[noeud] (Rbb) at ({(6.5)*\InterFeuilles},{\NiveauC}) {$5$};
+\node[feuille] (Rbba) at ({(6)*\InterFeuilles},{\NiveauD}) {};
+\node[feuille] (Rbbb) at ({(7)*\InterFeuilles},{\NiveauD}) {};
+\draw[fleche] (R)--(Ra);
+\draw[fleche] (Ra)--(Raa);
+\draw[fleche] (Raa)--(Raaa);
+\draw[fleche] (Raaa)--(Raaaa);
+\draw[fleche] (Raaa)--(Raaab);
+\draw[fleche] (Raa)--(Raab);
+\draw[fleche] (Ra)--(Rab);
+\draw[fleche] (Rab)--(Raba);
+\draw[fleche] (Rab)--(Rabb);
+\draw[fleche] (R)--(Rb);
+\draw[fleche] (Rb)--(Rba);
+\draw[fleche] (Rb)--(Rbb);
+\draw[fleche] (Rbb)--(Rbba);
+\draw[fleche] (Rbb)--(Rbbb);
+\end{tikzpicture}
+\end{center}
+\caption{Arbre (c)} \label{fig:Exemples d'arbres}
+\end{figure}
 
-\paragraph{}
-On a les propriétés suivantes pour les arbres complets :
-\begin{petiteprop}[relation entre taille et hauteur]
-La hauteur d'un arbre complet ($h$) et sa taille ($n$) vérifie la relation suivante :
-\begin{align}
-2^h-1 &= n \\
-\llap{$\Leftrightarrow$ \qquad \qquad} h &= log(n+1)
-\end{align}
-\end{petiteprop}
+Un arbre binaire de recherche n'est pas seulement un arbre ordonné où chaque nœud a un degré maximal de 2.  En effet, pour une racine n'ayant qu'un seul fils, sa position, s'il s'agit du fils de gauche ou du fils de droite, importe contrairement à un arbre ordonné.
+La figure 1 représente des arbres binaires dessinés sous leur forme standard. Attention, l'arbre (a) est différent de l'arbre (b) quand ils sont considérés comme des arbres binaires, mais en tant que arbres classiques, ils sont identiques.
+Cependant, un arbre binaire peut être associé à un arbre ordonné en ajoutant une représentation explicite des informations manquantes comme dans l'arbre (c). L'idée est de remplacer chaque enfant manquant de l'arbre binaire par un nœud n'ayant aucune descendance. Ces nœuds sont appelés des feuilles et sont représentés par des carrés dans l'arbre (c). On parle aussi de nœud externe pour une feuille en opposition aux nœuds internes. On obtient alors un arbre binaire entier : chaque nœud est soit une feuille soit a un degré égal à 2. Il n'y a pas de nœud de degré 1.
 
-\begin{proof}
-La preuve est immédiate par récurrence sur la hauteur :
-\paragraph{\underline{Base :}}
-$h = 0 \Leftrightarrow$ l'arbre est vide. Or $2^0-1 = 1-1 = 0$ et il y a bien 0 nœud dans l'arbre vide.
-\paragraph{\underline{Induction :}}
-Supposons que la propriété soit vérifiée pour tout arbre binaire complet de hauteur $h-1$.
-Soit $(x,G,D)$ un arbre binaire complet de hauteur $h$ et de taille $n$. 
-Alors $G$ et $D$ sont des arbres binaires complets de hauteur $h-1$. Alors $n = n_G + n_D + 1 = 2^{h-1}-1 + 2^{h-1}-1 + 1 = 2*(2^{h-1}) -1 = 2^h-1$.
-La propriété est vraie pour un arbre vide et se propage, elle est donc vérifiée pour tout arbre complet. Il suffit ensuite de prendre le logarithme de chaque côté de (1) pour avoir la deuxième égalité. 
-\end{proof}
 
-\paragraph{Conséquences :} On a $log(n) \leq log(n+1) \leq log(n^2) = 2log(n)$ donc $log(n+1) = \Theta(log(n))$. \textbf{Les algorithmes de complexité linéaire en la hauteur d'un arbre sont donc logarithmique en la taille de l'arbre pour les arbres complets}.
 
-De plus si on a une certaine garantie sur la structure d'un arbre, notamment sur son équilibre, on a alors des bornes sur la complexité des fonctions.
-En effet si $T$ est un arbre H-équilibré de hauteur $h$, sa taille, $n$, est comprise entre la taille d'un arbre complet de hauteur $h-1$ et celle d'un arbre complet de hauteur $h$. 
-Ce qui donne $h-1 \leq log(n-1)$ et $log(n-1) \leq h$.
-Les algorithmes linéaire en la hauteur sont donc également logarithmique en la taille pour les arbres H-équilibré. Pour garantir une certaine efficacité des algorithmes l'enjeu est donc de construire des arbres le plus équilibré possible.
 
-\begin{petiteprop}
-Un ABR complet non vide a $2^{h-1}$ feuilles.
-\end{petiteprop}
-La preuve est immédiate par récurrence sur la hauteur. On ne la détaille pas, le procédé est le même que précédemment, il suffit de remarquer que pour tout arbre complet non vide $T = (x,G,D)$, $f(T) = f(G) + f(D) = 2*f(G)$, avec $f(T) =$ le nombre de feuilles de T.
-On en déduit un corollaire assez intéressant: 
 
-\begin{cor}
-Plus de la moitié des noeuds dans un ABR complet sont des feuilles. 
-\end{cor}
-\begin{proof}
-On calcule le rapport entre le nombre de feuilles et le nombre de noeuds. 
-D'après la proposition précédente, ce rapport vaut $\dfrac{2^{h-1}}{2^{h}-1 } \geq \dfrac{2^{h-1}}{2^{h}} = \dfrac{1}{2}$ 
-\end{proof}
-
-\begin{theo}[hauteur moyenne d'un noeud]
-La profondeur moyenne d'un noeud choisi au hasard est en $\Theta(log(n))$
-\end{theo}
-
-\begin{proof}
-Par définition d'un ABR complet non vide, il y a $2^{h-1}$ noeuds à l'étage h de l'arbre, cela est dû au fait que chaque noeud qui n'est pas une feuille possède exactement 2 fils. 
-
-Ainsi, il y a 1 noeud à l'étage 1 (la racine), 2 noeuds à l'étage 2 (les 2 fils de la racine), 4 noeuds à l'étage 3 (les 2 fils des 2 noeuds de l'étage 1) et ainsi de suite... 
-
-Pour calculer la profondeur moyenne d'un noeud, il suffit de calculer le rapport entre la somme des profondeurs de chaque noeud de l'arbre et le nombre de noeuds total. 
-
-Ce rapport vaut :
-$\dfrac{\sum_{k=0}^{h-1} k*2^k}{2^{h}-1}$ = $\dfrac{2^{h}*h-2*(2^{h}-1)}{2^{h}-1}$ = $\dfrac{(h-1)*2^{h}-2^{h}+2}{2^{h}-1}$ (la valeur de la somme a été calculée à l'ordinateur) \\
-Et $\dfrac{(h-1)*(2^{h}-1)+(h-1)-(2^{h}-1)+1}{2^{h}-1}$ = $h-1 + \dfrac{h}{2^{h}-1}$ avec $\lim_{h\to\infty} \dfrac{h}{2^{h}-1}=0$ 
-
-Donc la hauteur moyenne d'un noeud vaut $h-1=\Theta(log(n))$ (d'après un théorème précédent)
-\end{proof}
-
-\chapter{Les Arbres Binaires de recherche}
-\section{Définition}
-Un arbre binaire de recherche est un arbre binaire étiqueté sur un ensemble muni d'un ordre total (typiquement les réels ou les entiers) dans lequel tout noeud a une étiquette supérieure à celles de son sous arbre gauche et inférieure à celles de son sous arbre droit. L'abréviation ABR ou BST pour \textit{binary search tree} est fréquemment utilisée. On donne aussi la définition inductive suivante :
+\section{Les arbres binaires de recherche}
+\subsection{Définition}
+Un arbre binaire de recherche est un arbre binaire étiqueté sur un ensemble muni d'un ordre total (typiquement les réels ou les entiers) dans lequel tout noeud a une étiquette supérieure à celles de tout les noeuds de son sous arbre gauche et inférieure à celles de son sous arbre droit. L'abréviation ABR ou BST pour \textit{binary search tree} est fréquemment utilisée. On donne aussi la définition inductive suivante :
 \begin{flushleft}
     \bf
     \underline{Base :}
     
 \end{flushleft}
-$\emptyset \in ABR$
+$\emptyset \in ABR$, $\forall x \in E, (x,\emptyset, \emptyset) \in ABR$
 \begin{flushleft}
     \bf
     \underline{Induction :}
@@ -491,7 +387,59 @@ $\emptyset \in ABR$
     \end{itemize}
     alors $(x,G,D) \in ABR$
 
-\section{Parcours et affichage}
+\subsection{Propriétés remarquables sur les arbres binaires de recherche}
+
+\begin{def}
+Un arbre binaire de recherche (ABR) est dit parfait si tous ses noeuds excepté ses feuilles ont 2 fils.
+Graphiquement, un ABR parfait est un ABR dont tous les étages sont "entièrement remplis" sauf le dernier remplir à gauche
+\end{def}
+\textbf{Définition:}  Un arbre binaire de recherche (ABR) est dit parfait si tous ses noeuds excepté ses feuilles ont 2 fils. \\ Graphiquement, un ABR parfait est un ABR dont tous les étages sont "entièrement remplis". \newline\newline
+\textbf{Théorème:}  \textit{Il y a $2^{h+1}-1$ noeuds dans un arbre binaire de recherche parfait de hauteur h.} \newline \newline
+\textbf{Preuve:} \newline
+\underline{Cas de base:} Si h=0, alors l'arbre est réduit à un noeud et donc n=1
+Dans ce cas, $2^{h+1}$ -1 = $2^{0+1}$ -1 = 1 = n \newline \newline
+\underline{Induction:} Supposons le résultat vrai pour tout ABR de hauteur h.
+Soit x $\in$ $\mathbb{N}$. \\
+Soit (x,G,D)  un ABR parfait de hauteur h+1.\\
+Par définition d'un ABR parfait, les sous-arbres G et D sont de hauteur h. \\
+Donc le nombre de noeuds de l'arbre vaut n = 1+($2^{h+1}$-1)+($2^{h+1}$-1) = 1+2$*$($2^{h+1}$-1) = $2^{h+2}$ -1 \\
+D'où le résultat par récurrence. \newline \newline
+\textbf{Théorème:}  \textit{Un ABR parfait de n noeuds a une hauteur de h = $log_2(n+1)-1$ = $\Theta(ln(n))$} \newline \newline
+\textbf{Preuve:} \\
+D'après le théorème précédent, un ABR parfait de hauteur h a $2^{h+1}$-1 noeuds. \\
+n=$2^{h+1}$-1 \\
+$\Leftrightarrow n+1 = 2^{h+1}$ \\
+$\Leftrightarrow log_2(n+1)=h+1$ \\
+$\Leftrightarrow h = log_2(n+1)-1$ \\
+De plus, $\lim_{n\to\infty} \frac{log_2(n+1)}{ln(n)}$ = $\lim_{n\to\infty}  \frac{\frac{1}{(n+1)*ln(2)}}{\frac{1}{n}}$ d'après la règle de l'Hôpital \\
+$\Leftrightarrow$ $\lim_{n\to\infty} \frac{n}{(n+1)*ln(2)}$ = $\lim_{n\to\infty} \frac{n}{n*(1+\frac{1}{n})*ln(2)}$ = $\frac{1}{ln(2)}$ \\
+Ainsi, $log_2(n+1) -1 = \Theta(ln(n))$ \newline \newline \newline
+\textbf{Théorème:}  \textit{Un ABR parfait a $2^h$ feuilles.} \newline \newline	
+\textbf{Preuve:} \\
+\underline{Cas de base:} Si h=0, alors l'arbre est réduit à un noeud et n=1 donc $2^0$=1 et la relation est vérifiée. \newline \newline
+\underline{Induction:} Supposons la propriété vérifiée pour tout arbre binaire de hauteur h. \\
+Soit x $\in$ $\mathbb{N}$. \\
+On considère l'ABR parfait (x,G,D). Par définition d'un ABR parfait, G et D sont de hauteur h et ont donc chacun $2^h$ feuilles. \\
+(x,G,D) possède donc  $2^h + 2^h$ = $2*2^h$ =  $2^{h+1}$ feuilles. \\
+D'où le résultat. \\ 
+On en déduit un corollaire assez intéressant: \newline \newline
+\textbf{Corollaire:}  \textit{Plus de la moitié des noeuds dans un ABR sont des feuilles.} \newline \newline
+\textbf{Preuve:} \\
+On calcule le rapport entre le nombre de feuilles et le nombre de noeuds. \\
+D'après les théorèmes précédents, ce rapport vaut $\frac{2^h}{2^{h+1} -1 }$ $\ge$ $\frac{2^h}{2^{h+1}}$ = $\frac{1}{2}$ \newline \newline
+\textbf{Théorème:}  \textit{La profondeur moyenne d'un noeud choisi au hasard est en $\Theta(ln(n))$} \newline \newline
+\textbf{Preuve:} \\
+Par définition d'un ABR parfait, il y a $2^h$ noeuds à l'étage h de l'arbre, cela est dû au fait que chaque noeud qui n'est pas une feuille possède exactement 2 fils. \\
+Ainsi, il y a 1 noeud à l'étage 0 (la racine), 2 noeuds à l'étage 1 (les 2 fils de la racine), 4 noeuds à l'étage 2 (les 2 fils des 2 noeuds de l'étage 1) et ainsi de suite... \\
+Pour calculer la profondeur moyenne d'un noeud, il suffit de calculer le rapport entre la somme des profondeurs de chaque noeud de l'arbre et le nombre de noeuds total. \newline \newline
+Ce rapport vaut $\frac{\sum_{k=0}^{h} k*2^k}{2^{h+1}-1}$ = $\frac{h*2^{h+1}-2^{h+1}+2}{2^{h+1}-1}$ (le numérateur a été calculé à l'ordinateur) \\
+Et $\frac{h*(2^{h+1}-1)+h-(2^{h+1}-1)+1}{2^{h+1}-1}$ = $h-1 + \frac{h+1}{2^{h+1}-1}$ avec $\lim_{h\to\infty} \frac{h+1}{2^{h+1}-1}=0$ \newline \newline
+Donc la hauteur moyenne d'un noeud vaut $h-1=\Theta(ln(n))$ (d'après un théorème précédent)
+
+
+
+%Je vais ajouter les résultats et preuves sur la tailles d'un ABR parfait, la hauteur moyenne d'un noeud, etc...%
+\subsection{Parcours et affichage}
 
 Pour réaliser les différents parcours décrits ci-dessous, on peut définir un arbre par un dictionnaire qui associe chaque nœud à ses fils. Par exemple, l'arbre (a) est définit par :
 \begin{lstlisting}
@@ -514,7 +462,7 @@ A.gauche.gauche.gauche = Arbre(6)
 A.droit.gauche = Arbre(5)
 \end{lstlisting}
 On utilisera cette classe pour les parcours en profondeur.
-\subsection{Parcours en largeur}
+\subsubsection{Parcours en largeur}
 Le principe d'un parcours en largeur est de lister les nœuds de l'arbre niveau par niveau en commençant par les nœuds de niveau 1 puis les nœuds de niveau 2 et ainsi de suite. Dans chaque niveau, les nœuds sont parcourus de gauche à droite.
 Le parcours en largeur de l'arbre (a) est donc $[3, 2, 7, 1, 4, 5, 6]$.
 Contrairement aux parcours suivant le parcours en largeur s'implémente naturellement par un algorithme itératif.
@@ -536,7 +484,7 @@ def parcours_largeur(arbre, racine):
 Pour les arbres la complexité d'un tel parcours est en $\Theta(n)$ : on fait exactement n tours de boucle. 
 Remarquons que cet algorithme peut être utilisé sur n'importe quel type d'arbre, et même sur des graphes en général, avec quelques modifications pour ne pas repasser sur le même noeud et avoir une boucle infinie dans le cas de graphe cyclique par exemple.
 
-\subsection{Parcours en profondeur}
+\subsubsection{Parcours en profondeur}
 Le principe d'un parcours en profondeur est de lister les nœuds de l'arbre récursivement à partir de la racine puis les sous-arbres gauches et droits de cette racine et ainsi de suite pour la totalité de l'arbre.
 Il existe plusieurs types de parcours en profondeur : Infixe, Suffixe (ou Postfixe) et Préfixe.
 \begin{itemize}
@@ -552,7 +500,7 @@ def parcours_infixe(arbre):
         parcours_infixe(arbre.droit) 
 \end{lstlisting}
 
-\item Suffixe \label{suffixe}
+\item Suffixe
 
 Le parcours suffixe consiste quant à lui à lister les nœuds depuis le sous-arbre gauche puis le sous-arbre droit et enfin remonter à la racine.
 Le parcours suffixe de l'arbre (a) est donc $[6, 1, 4, 2, 5, 7, 3]$.
@@ -578,86 +526,25 @@ def parcours_prefixe(arbre):
 
 \end{itemize}
 
-Dans les trois cas la complexité est également en $\Theta(n)$, on passe exactement une fois sur chaque noeud. Ces parcours sont applicables aux arbres binaires en général, de recherche ou non, comme par exemple pour évaluer un arbre d'expression arithmétique.
-
-\section{Méthodes principales spécifiques aux ABR}
-\subsection{Recherche :} 
-La recherche se fait de manière récursive, l'algorithme est assez simple il suffit de comparer la valeur qu'on recherche avec la clef de la racine et voir sur quel côté continuer la recherche, il y a 4 cas à traiter:
+Dans les trois cas la complexité est également en $\Theta(n)$, on passe exactement une fois sur chaque noeud. 
+\subsection{Méthodes principales}
+\subsubsection{Recherche:} 
+La recherche se fait de manière récursive, l'algorithme est assez simple il suffit de comparer la valeur qu'on recherche avec la clef de la racine et voir sur quel coté continuer la recherche, il y a 4 cas à traiter:
 \begin{enumerate}
-	\item la valeur qu'on recherche se trouve à la racine, dans ce cas on renvoie directement la racine.
-	\item la valeur qu'on recherche est plus petite que la racine ce qui veut dire qu'elle est forcément dans le sous-arbre gauche donc on fait un appel récursif sur ce dernier.
+	\item la valeur qu'on recherche se trouve a la racine, dans ce cas on renvoie directement la racine.
+	\item la valeur qu'on recherche est plus petite que la racine qui veut dire qu'elle est forcement dans le sous-arbre gauche donc on fait un appel récursif sur ce dernier.
 	\item la valeur est plus grande que la racine on fait donc un appel récursif sur le sous-arbre droit.
 	\item et finalement si on atteint une feuille et que sa clé n'est pas l'élément qu'on recherche ça veut dire que l'élément ne se trouve pas dans l'arbre.
 \end{enumerate}
-
-On peut alors utiliser la fonction récursive suivante:
-\begin{lstlisting}
-	def recherche(self,x):
-		if self.clef == None:
-			return False
-
-		if x==clef:
-			return self
-		
-		if x<self.clef:
-			if self.gauche is not None:
-				return self.gauche.recherche(x)
-			else :
-				return False
-		elif x > self.clef:
-			if self.droit is not None:
-				return self.droit.recherche(x)
-			else: 
-				return False
-\end{lstlisting}
-
-\paragraph{Complexité, terminaison et correction :} On fait une preuve détaillée pour la terminaison, la correction et la complexité de cette fonction.
-
 \begin{itemize}
-    \item Complexité : le nombre d’opérations de la recherche dépend de la hauteur de l’arbre. Nous étudions ici le nombre de comparaisons.
-    \begin{itemize}
-	\item[-] Meilleur cas : l'élément cherché est à la racine. La fonction fait un retour immédiat, l'opération est en temps constant : 1 comparaison.
-	
-	\item[-] Pire cas : l'élément cherché est dans la feuille de plus grande profondeur (ie de profondeur h = la hauteur de l'arbre). On fait exactement h-1 appels récursifs après l'appel initial donc h comparaisons, jusqu'à arriver à la feuille
-    \end{itemize}
-    La recherche est donc en $\Omega(1)$ et $\mathcal{O}(h)$, c'est à dire linéaire en la hauteur dans le pire cas. Nous avons vu que $h = \Theta(log(n))$ pour les arbres complets ou équilibrés, dans ce cas la recherche est donc en $\mathcal{O}(log(n))$. Elle est en $\mathcal{O}(n)$ dans le cas d'arbres filiformes. Nous étudierons plus finement la complexité moyenne en fonction de la taille pour le rendu final du projet.
-
-
-\item Terminaison et correction :
-
-montrons que l'appel $T.recherche(x)$ se termine et est correct pour tout arbre de recherche $T$ étiqueté sur un ensemble $E$ et pour tout $x \in E$. On fait une preuve par induction sur la hauteur. 
-    \begin{flushleft}
-    \underline{Base :}
-    \end{flushleft}
-    Si h=0, alors l'arbre est vide et la fonction renvoie False quelque soit x, ce qui est le résultat attendu.
-    
-    \begin{flushleft}
-    \underline{Induction :}
-    \end{flushleft}
-    
-    Supposons que la fonction se termine et est correcte pour tout arbre de hauteur $p \in {\llbracket 0, h \rrbracket}$ et pour tout élément $x \in E$.
-    
-    Soit $T = (y,G,D)$ un ABR de hauteur $h+1$ et soit $x \in E$.
-    
-    Lors de l'appel $T.recherche(x)$ on distingue trois cas:
-    \begin{enumerate}
-    \item $y = x$ alors la fonction se termine et renvoie True, ce qui est le retour valide.
-    \item $ x < y$ on a alors un appel récursif $G.recherche(x)$. Or on sait que x ne peut pas être dans D car T est un arbre binaire de recherche. De plus par hypothèse de récurrence l'appel $G.recherche(x)$ se termine et renvoie True si x est dans G, false sinon. Donc l'appel $T.recherche(x)$ se termine et est valide.
-    \item $x > y$ ici on sait que x ne peut pas être dans G, puis que $D.recherche(x)$ se termine et est valide : l'appel $T.recherche(x)$ se termine et est valide également.
-    \end{enumerate}
-    Dans les trois cas l'appel $T.recherche(x)$ se termine et est valide.
-\begin{flushleft}
-    \underline{Conclusion :}
-    \end{flushleft}
-
-On a montré que l'appel $T.recherche(x)$ se termine et est valide pour l'arbre vide puis que s'il est valide et se termine pour tout arbre de hauteur $p \leq h$ alors il est valide et se termine pour tout arbre de hauteur $h+1$, donc l'appel $T.recherche(x)$ se termine et est valide pour tout arbre binaire de recherche.
+    \item Complexité :
+\end{itemize} 
+Le nombre d’opérations de la recherche ou de l’insertion dépend de la hauteur de l’arbre.
+\begin{itemize}
+	\item[-]si l’arbre est bien équilibré, pour un ABR de n nœuds , on effectuera $\mathcal{O}(log_2(n))$ opérations.
+	\item[-]si l’arbre est un peigne, la hauteur vaudra n et le nombre d’opérations sera $\mathcal{O}(n)$.
 \end{itemize}
-
-Remarque : le cas de l'arbre vide peut se rencontrer de deux manières, un appel directement sur un arbre vide et à la fin de la récursion lorsqu'on arrive aux feuilles. Les deux cas sont distincts dans notre implémentation. En effet si T est de type None on ne peut pas faire l'appel $T.recherche(x)$, c'est pour cela que l'on fait une vérification avant de faire les appels récursifs. Cependant si $T$ a été initialisé comme un arbre contenant une seul clef vide ($T = Arbre(None)$), l'appel ne provoque pas de problème pour Python et il faut prévoir ce cas, c'est le but le la ligne 2. 
-
-Pour les méthodes suivantes la complexité, la terminaison et la correction peuvent être prouvées de manière tout à fait similaire, nous ne détaillons pas ces preuves. 
-
-\subsection{Insertion :}
+\subsubsection{Insertion:}
 Pour l'insertion on procède de manière analogue à la recherche : pour insérer un élément il faut savoir dans quelle partie de l'arbre le mettre pour que cela reste un arbre binaire de recherche.
 Pour cela il suffit de comparer la valeur à insérer au noeud courant. On distingue trois cas :
 \begin{enumerate}
@@ -670,8 +557,8 @@ Pour cela il suffit de comparer la valeur à insérer au noeud courant. On disti
     \item si elle est plus grande on procède de manière analogue sur le sous arbre droit.
 \end{enumerate}
 On remarque que dans cette version on insère toujours au niveau des feuilles, si insertion il y a. L'algorithme est simple, mais il n'est pas optimal sur la structure de l'arbre, dans le sens où on ne cherche pas à garantir une structure équilibrée. Nous verrons plus tard (c'est prévu pour le rapport final) qu'il est possible de le faire en introduisant la rotation d'arbre.
-La complexité est en $\mathcal{O}(h)$ avec $h$ la hauteur de l'arbre, comme pour la recherche. La preuve est analogue à la preuve de la méthode recherche.
-\subsection{Suppression :} 
+La complexité est en $\mathcal{O}(h)$ avec $h$ la hauteur de l'arbre, comme pour la recherche. La preuve est tout à fait analogue à la preuve de la méthode recherche.
+\subsubsection{Suppression:} 
 La fonction de suppression se fait de manière récursive. Elle est assez simple mais il faut juste faire attention à ne pas perdre des informations ou à modifier la structure d'arbre,ici aussi on 3 cas principaux :
 notons d'abord x l'élément qu'on veut supprimer: 
 \begin{enumerate}
@@ -744,16 +631,15 @@ un coût maximal en $\Theta(log_2(n))$ si l’arbre est équilibré.
 \end{subfigure}
 \caption{Exemple de suppression de la racine : noeud 15}
 \end{figure}
-\section{Complexité des méthodes principales}
+\subsection{Complexité des méthodes principales}
 Dans toute cette section, on notera h la hauteur d'un arbre binaire et n son nombre de noeuds.
-\subsection{Complexité théorique de la fonction de recherche:}
+\subsubsection{Complexité théorique de la fonction de recherche:}
 Le pire cas pour la fonction de recherche est le cas où l'on doit parcourir l'arbre jusqu'à arriver à une feuille. \\
-Ainsi, la complexité de la fonction de recherche est en O(h) dans le pire cas. 
-
+Ainsi, la complexité de la fonction de recherche est en O(h) dans le pire cas. \newline \newline
 Le cas moyen correspond au cas où l'arbre binaire de recherche est de hauteur logarithmique par rapport à n. En effet, un théorème indique que la hauteur d'un arbre généré aléatoirement sera en moyenne logarithmique par rapport à n. \cite{hauteur} \\
 Ainsi, la complexité de la fonction de recherche est en O($log_2(n)$) dans le cas moyen.
 
-\subsection{Protocole expérimental:}
+\subsubsection{Protocole expérimental:}
 
 \subsubsection{Pire cas:}
 Nous avons modélisé le pire cas par des arbres de hauteur égale à leur nombre de sommets.
@@ -793,7 +679,7 @@ Voici les résultats obtenus :
 
 
 \subsubsection{Cas moyen:}
-Nous avons modélisé le cas moyen par des arbres parfaits car d'après la partie 1.3, la hauteur d'un arbre parfait est en $\Theta(log_2(n))$ 
+Nous avons modélisé le cas moyen par des arbres parfaits car d'après la partie 0.4.2, la hauteur d'un arbre parfait est en $\Theta(log_2(n))$ 
 
 Voici les résultats que nous avons obtenus en reprenant exactement le même protocole expérimental mais en prenant des arbres parfaits: 
 
@@ -810,8 +696,8 @@ De plus, la création d'arbres parfaits est coûteuse en temps et en mémoire: I
 Nous pourrons éventuellement tenter de créer des arbres binaires de grande taille en ajoutant des éléments aux arbres binaires de petite taille mais cela nécessiterait que nous prenions des étiquettes réelles et non plus entières. 
 
 
-\chapter{Implémentation : comparaison entre structure récursive et représentation en liste}
-\section{Structure récursive}
+\section{Implémentation : comparaison entre structure récursive et représentation en liste}
+\subsection{Structure récursive}
 Une représentation qui semble la plus naturelle est d'implémenter une structure avec auto-référence. En effet en s'inspirant de la définition inductive on peut voir un arbre binaire comme une structure contenant essentiellement 3 champs : une clef et deux arbres binaires, ses sous-arbres gauche et droit. 
 
 En terme d'implémentation cela dépend du langage utilisé. 
@@ -853,7 +739,7 @@ L'arbre créé est :
 \end{tikzpicture}
 \end{center}
 
-\section{Liste}
+\subsection{Liste}
 
 On peut aussi représenter l'arbre sous forme de liste. L'idée est d'avoir la racine au début de la liste, le fils gauche à l'index 1, le fils droite à l'index 2 et ainsi de suite. Pour un nœud à l'indice i, on trouve son fils gauche à l'indice 2i de la liste, et le droit à l'indice 2i+1. 
 On peut donc également retrouver le père d'un nœud facilement : pour un nœud d'index i, le père est à l'index $\lfloor \frac{i-1}{2} \rfloor$ (on prend la partie entière dans la division par 2).
@@ -881,8 +767,8 @@ $[5,2,10,"vide",3,9,12]$
 
 Remarquons qu'idéalement il faut utiliser une structure de base qui combine les avantages de la liste chaînée et des tableaux : nous avons besoins d'accéder à aux éléments à une position précise en temps constant si possible, mais la structure doit être de taille flexible pour l'agrandir ou la réduire. 
 
-\section{Comparaison}
-\subsection{Avantages et inconvénients}
+\subsection{Comparaison}
+\subsubsection{Avantages et inconvénients}
 Pour la structure récursive :
 \begin{itemize}
 \item[•]
@@ -909,11 +795,7 @@ Dans certains cas la liste est particulièrement appropriée par exemple pour la
 
 Pour notre implémentation nous avons choisi la représentation en structure récursive en utilisant la programmation orientée objet en Python.
 
-\chapter*{Conclusion}
-\addcontentsline{toc}{chapter}{Conclusion}
-
-Les arbres binaires de recherche sont donc une structure utile pour stocker des données que l'ont peut munir d'une relation d'ordre total, comme des entiers, mais on peut aussi penser à des lettres et donc des mots. En effet dans une telle structure les opérations classiques de recherche, d'insertion et de suppression ont une complexité moyenne logarithmique par rapport au nombre d'élements, les mesures expérimentales ayant confirmé l'étude théorique. Nous verrons par la suite que les quadtree conservent ces propriétés. Nous étudierons les différents types de quadtree (quadtree point et quadtree région notamment) et leurs applications pratiques.
-
+\section{Conclusion}
 
 \nocite{*}
 \bibliographystyle{plain}
