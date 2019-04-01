@@ -225,6 +225,11 @@ class Arbre:
         Vu qu'on ne peut pas modifier sur place on renvoit un nouvel arbre
         utilisation recommandée : 
         abr = abr.rotationGauche pour éviter les copies inutiles"""
+       
+        if self is None: #arbre vide : rien à faire
+            return self
+        if self.droit is None: #arbre droite vide : rien à faire
+            return self
         racine = self.droit.clef
         clef_gauche = self.clef
         arbre_droit = self.droit.droit
@@ -241,7 +246,16 @@ class Arbre:
         sous_arbre_droit = self.droit
         return Arbre(racine,arbre_gauche,Arbre(clef_droite,sous_arbre_gauche,sous_arbre_droit))
         
-    
+    def reequilibrage(self):
+        """rééquilibrage de l'arbre.
+        dijsonction de cas puis rotations """
+        if abs(self.coeffEquilibre()) <= 1: #arbre déjà équilibré
+            return self
+        if self.coeffEquilibre() < -1 #cas où le plus grand sous arbre est à droite
+            
+        
+        
+        
     def copy(self):
         """renvoie une copie de l'arbre
         utilise un parcours en largeur itératif"""
