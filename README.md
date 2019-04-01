@@ -23,7 +23,11 @@
   - https://kpully.github.io/Quadtrees/
   - https://fr.wikipedia.org/wiki/Quadtree
   - http://www.astroml.org/book_figures/chapter2/fig_quadtree_example.html7
-  - Application : https://www.phase2technology.com/blog/using-d3-quadtrees-power-interactive-map-bonnier-corporation
+  - Application :
+    - compression de données et dataviz https://www.phase2technology.com/blog/using-d3-quadtrees-power-interactive-map-bonnier-corporation
+    - détetection de collision : https://stackoverflow.com/questions/41946007/efficient-and-well-explained-implementation-of-a-quadtree-for-2d-collision-det video : https://streamable.com/3pgmn
+    - traitement d'image (compression) : https://www.michaelfogleman.com/static/quads/ source : https://github.com/fogleman/Quads
+    
   
   
 - Mesures expérimentales :
