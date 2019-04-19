@@ -1,0 +1,161 @@
+\documentclass{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning, calc}
+\tikzstyle{vertex}=[draw,fill=white!15,circle,minimum size=20pt,inner sep=0pt]
+\usepackage{color}
+\definecolor{darkWhite}{rgb}{0.94,0.94,0.94}
+\lstset{
+  aboveskip=3mm,
+  belowskip=-2mm,
+  backgroundcolor=\color{darkWhite},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{red},
+  deletekeywords={...},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  framexleftmargin=16pt,
+  framextopmargin=3pt,
+  framexbottommargin=6pt,
+  frame=tb,
+  keepspaces=true,
+  keywordstyle=\color{blue},
+  language=python,
+  literate=
+  {²}{{\textsuperscript{2}}}1
+  {⁴}{{\textsuperscript{4}}}1
+  {⁶}{{\textsuperscript{6}}}1
+  {⁸}{{\textsuperscript{8}}}1
+  {€}{{\euro{}}}1
+  {é}{{\'e}}1
+  {è}{{\`{e}}}1
+  {ê}{{\^{e}}}1
+  {ë}{{\¨{e}}}1
+  {É}{{\'{E}}}1
+  {Ê}{{\^{E}}}1
+  {û}{{\^{u}}}1
+  {ù}{{\`{u}}}1
+  {â}{{\^{a}}}1
+  {à}{{\`{a}}}1
+  {á}{{\'{a}}}1
+  {ã}{{\~{a}}}1
+  {Á}{{\'{A}}}1
+  {Â}{{\^{A}}}1
+  {Ã}{{\~{A}}}1
+  {ç}{{\c{c}}}1
+  {Ç}{{\c{C}}}1
+  {õ}{{\~{o}}}1
+  {ó}{{\'{o}}}1
+  {ô}{{\^{o}}}1
+  {Õ}{{\~{O}}}1
+  {Ó}{{\'{O}}}1
+  {Ô}{{\^{O}}}1
+  {î}{{\^{i}}}1
+  {Î}{{\^{I}}}1
+  {í}{{\'{i}}}1
+  {Í}{{\~{Í}}}1,
+  morekeywords={*,...},
+  numbers=left,
+  numbersep=10pt,
+  numberstyle=\tiny\color{black},
+  rulecolor=\color{black},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  stepnumber=1,
+  stringstyle=\color{gray},
+  tabsize=4,
+  title=\lstname,
+}
+\begin{document}
+Implémentation d’un quadtree en Pyhton :
+Pour implémenter un quadtree « point », il existe plusieurs méthodes. Celle présentée dans ce rapport nécessite 2 classes pour construire la classe « quadtree » :
+\begin{itemize}
+\item Une classe « point » : ici, nous travaillons en deux dimensions donc un point est représenté par deux coordonnées
+\item Une classe « nœud » : dans un quadtree chaque nœud correspond à un rectangle dans le plan. Chaque fils d’un nœud correspond à un quadrant du rectangle du nœud 
+\end{itemize}
+Un quadtree correspond alors à une subdivision du rectangle associé au nœud. Le but est de subdiviser chaque rectangle jusqu’à ce qu’il ne contienne qu’au plus 1 point.
+La construction se fait récursivement. La situation initiale est un rectangle contenant tous les points. S’il y a plus d’un point dans le rectangle alors on divise le rectangle en 4 quadrants disjoints de même taille : Nord-Ouest, Sud-Ouest, Sud-Est, Nord-Est. Puis on associe chaque point au quadrant à qui il appartient. De même, s’il y a plus d’un point dans l’un des quadrants alors on le divise à nouveau en 4 sous-quadrants. Par récurrence, on quadrille l’ensemble du plan.
+Un nœud est donc une feuille si le quadrant associé contient un unique point, sinon il est interne.
+\begin{lstlisting}
+class Point() :
+	def __init__(self,x,y) :
+		self.x = x
+		self.y = y
+\end{lstlisting}
+
+On définit une fonction pour vérifier si deux points ont les mêmes coordonnées : 
+\begin{lstlisting}
+def is_equal(self, point) :
+	if (self.x == point.x and self.y == point.y)
+	 	return True
+	else:
+		return False
+\end{lstlisting}
+
+On caractérise également des fonctions qui retournent la coordonnée x ou la coordonnée y d’un point :
+\begin{lstlisting}
+def get_x(self):
+	return self.x
+	
+def get_y(self):
+	return self.y
+\end{lstlisting}
+ 
+Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la position d’un point en fonction d’un autre c’est-à-dire si un point se trouve au Nord-Ouest, au Sud-Ouest, au Sud-Est ou au Nord-Est d’un autre. De plus, il est nécessaire de traiter les cas singuliers où un point serait exactement à la frontière entre plusieurs quadrants.
+\begin{lstlisting}
+def is_NW(self, point):  #le point est au nord-ouest du self
+	if (self.x >= point.x and self.y < point.y)
+		return True
+	else:
+		return False
+		
+def is_SW(self, point):
+	if (self.x >= point.x and self.y > point.y)
+		return True
+	else:
+		return False
+		
+def is_SE(self, point):
+	if (self.x <= point.x and self.y > point.y)
+		return True
+	else:
+		return False
+		
+def is_NE(self, point):
+	if (self.x <= point.x and self.y < point.y)
+		return True
+	else:
+		return False
+\end{lstlisting} 
+
+Pour simplifier les algorithmes, on aura également besoin de mesurer la distance euclidienne entre deux points :
+\begin{lstlisting}
+def distance(self, point) :
+	return ((self.x $-$ point.x)$**$2 $+$ (self.y $-$ point.y)$**$2)$**$(1/2)
+\end{lstlisting}
+
+
+On implémente maintenant la classe « arbre » :
+\begin{lstlisting}
+class Arbre() :
+	def __init__(self, point, ID, NW, SW, SE, NE)
+\end{lstlisting}
+
+
+\end{document}
