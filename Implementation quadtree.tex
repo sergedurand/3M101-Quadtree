@@ -102,10 +102,7 @@ class Point() :
 On définit une fonction pour vérifier si deux points ont les mêmes coordonnées : 
 \begin{lstlisting}
 def is_equal(self, point) :
-	if (self.x == point.x and self.y == point.y)
-	 	return True
-	else:
-		return False
+	return (self.x == point.x and self.y == point.y)
 \end{lstlisting}
 
 On caractérise également des fonctions qui retournent la coordonnée x ou la coordonnée y d’un point :
@@ -120,28 +117,16 @@ def get_y(self):
 Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la position d’un point en fonction d’un autre c’est-à-dire si un point se trouve au Nord-Ouest, au Sud-Ouest, au Sud-Est ou au Nord-Est d’un autre. De plus, il est nécessaire de traiter les cas singuliers où un point serait exactement à la frontière entre plusieurs quadrants.
 \begin{lstlisting}
 def is_NW(self, point):  #le point est au nord-ouest du self
-	if (self.x >= point.x and self.y < point.y)
-		return True
-	else:
-		return False
+	return (self.x >= point.x and self.y < point.y)
 		
 def is_SW(self, point):
-	if (self.x >= point.x and self.y > point.y)
-		return True
-	else:
-		return False
+	return (self.x > point.x and self.y >= point.y)
 		
 def is_SE(self, point):
-	if (self.x <= point.x and self.y > point.y)
-		return True
-	else:
-		return False
+	return (self.x <= point.x and self.y > point.y)
 		
 def is_NE(self, point):
-	if (self.x <= point.x and self.y < point.y)
-		return True
-	else:
-		return False
+	return (self.x < point.x and self.y <= point.y)
 \end{lstlisting} 
 
 Pour simplifier les algorithmes, on aura également besoin de mesurer la distance euclidienne entre deux points :
@@ -155,6 +140,12 @@ On implémente maintenant la classe « arbre » :
 \begin{lstlisting}
 class Arbre() :
 	def __init__(self, point, ID, NW, SW, SE, NE)
+		self.point = point
+		self.ID = ID
+		self.NW = NW
+		self.SW = SW
+		self.SE = SE
+		self.NE = NE
 \end{lstlisting}
 
 
