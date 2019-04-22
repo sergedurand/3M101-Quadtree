@@ -114,7 +114,65 @@ def get_y(self):
 	return self.y
 \end{lstlisting}
  
-Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la position d’un point en fonction d’un autre c’est-à-dire si un point se trouve au Nord-Ouest, au Sud-Ouest, au Sud-Est ou au Nord-Est d’un autre. De plus, il est nécessaire de traiter les cas singuliers où un point serait exactement à la frontière entre plusieurs quadrants.
+Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la position d’un point en fonction d’un autre c’est-à-dire si un point se trouve au Nord-Ouest, au Sud-Ouest, au Sud-Est ou au Nord-Est d’un autre. Evidemment, si un point est égal à un autre, il n'est dans aucune de ces quatre situations. De plus, il est nécessaire de traiter les cas singuliers où un point serait exactement à la frontière entre plusieurs quadrants. On suivra arbitrairement les règles décrites par la figure~\ref{fig_imp_QT}.
+
+
+\begin{figure}[h]
+\centering
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt     
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,470); %set diagram left start at 0, and has height of 470
+%Straight Lines [id:da22013873563402342] 
+\draw    (180.29,149.86) -- (260.6,150.04) ;
+%Straight Lines [id:da6526683913061784] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (200.67,89.67) -- (200,209) ;
+%Straight Lines [id:da7623472892810397] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (320.67,90.33) -- (320,209.67) ;
+%Straight Lines [id:da4415887027397025] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (320,209.67) -- (200,209) ;
+%Straight Lines [id:da9527889195393131] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (320.67,90.33) -- (200.67,89.67) ;
+%Straight Lines [id:da13492566984177712] 
+\draw    (230.29,150) -- (290.5,150) ;
+\draw [shift={(290.5,150)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+\draw [shift={(230.29,150)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Straight Lines [id:da8076164026512465] 
+\draw    (260.4,180.4) -- (260.8,120.4) ;
+\draw [shift={(260.8,120.4)}, rotate = 270.38] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+\draw [shift={(260.4,180.4)}, rotate = 270.38] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Shape: Axis 2D [id:dp14184713416836026] 
+\draw  (250.6,150.04) -- (350.6,150.04)(260.6,60.4) -- (260.6,160) (343.6,145.04) -- (350.6,150.04) -- (343.6,155.04) (255.6,67.4) -- (260.6,60.4) -- (265.6,67.4)  ;
+%Straight Lines [id:da3187137992537872] 
+\draw    (260.6,150.4) -- (260.33,230) ;
+\draw   (275.13,175) .. controls (278.5,177.78) and (281.88,179.44) .. (285.25,180) .. controls (281.88,180.56) and (278.5,182.22) .. (275.13,185) ;
+\draw   (285.24,135.12) .. controls (287.99,131.71) and (289.61,128.31) .. (290.13,124.94) .. controls (290.73,128.3) and (292.43,131.66) .. (295.24,135.01) ;
+\draw   (235.23,164.98) .. controls (232.42,168.33) and (230.73,171.7) .. (230.14,175.06) .. controls (229.61,171.69) and (227.98,168.29) .. (225.23,164.89) ;
+\draw   (245.27,124.98) .. controls (241.88,122.21) and (238.5,120.57) .. (235.13,120.02) .. controls (238.49,119.45) and (241.87,117.77) .. (245.23,114.98) ;
+%Straight Lines [id:da7462190641238284] 
+\draw    (236.25,120) -- (260.8,120.4) ;
+%Straight Lines [id:da43374123490339933] 
+\draw    (260.4,180.4) -- (285.12,180.06) ;
+%Straight Lines [id:da8946248849560359] 
+\draw    (290.24,125.39) -- (290.5,150) ;
+%Straight Lines [id:da7024140092257973] 
+\draw    (230.29,150) -- (230.01,174.94) ;
+% Text Node
+\draw (222,106.33) node  [align=left] {NW};
+% Text Node
+\draw (302,106.33) node  [align=left] {NE};
+% Text Node
+\draw (302,197) node  [align=left] {SE};
+% Text Node
+\draw (222,197) node  [align=left] {SW};
+% Text Node
+\draw (355.5,153) node   {$x$};
+% Text Node
+\draw (255.5,52) node   {$y$};
+\end{tikzpicture}
+\caption{Règles pour la localisation des points situés sur une frontière entre deux quadrants}
+\label{fig_imp_QT}
+\end{fig}
+
 \begin{lstlisting}
 def is_NW(self, point):  #le point est au nord-ouest du self
 	return (self.x >= point.x and self.y < point.y)
@@ -128,6 +186,8 @@ def is_SE(self, point):
 def is_NE(self, point):
 	return (self.x < point.x and self.y <= point.y)
 \end{lstlisting} 
+
+
 
 Pour simplifier les algorithmes, on aura également besoin de mesurer la distance euclidienne entre deux points :
 \begin{lstlisting}
