@@ -6,7 +6,7 @@ import time
 import sys
 
 
-class Arbre:
+class ArbreAVL:
     
     """les fonctions modifient l'abre sur lesquels elles sont appelées:
         il faut faite T.insertion(x) pour insérer T, pas besoin de faire T = T.insertion(x)"""
@@ -14,7 +14,17 @@ class Arbre:
         self.clef=clef
         self.gauche=gauche
         self.droit=droit
-        self.hauteur
+        h = 1;
+        #distinction de cas pour la gestion de la hauteur
+        if gauche is not None :
+            if droit is None :
+                h=h+gauche.hauteur
+            else:
+                h=h+max(droit.hauteur,gauche.hauteur)
+        else:
+            if droit is not None:
+                h=h+droit.hauteur
+        self.hauteur = h
         
     def getClef(self):
         return self.clef
@@ -39,22 +49,45 @@ class Arbre:
             if x<self.clef:
                 if self.gauche is not None:
                     self.gauche.insertion(x)
+                    if self.droit is None:
+                        self.hauteur = 1 + self.gauche.hauteur
+                    else:
+                        self.hauteur = 1 + max(self.gauche.hauteur,self.droit.hauteur)
+                    self = self.reequilibrageNoeud()
                 #cas où le sous arbre gauche est vide
                 else :
-                    self.gauche = Arbre(x)
+                    self.gauche = ArbreAVL(x)
+                    if self.droit is None:
+                        self.hauteur = 2 #à ce niveau l'arbre n'a qu'une feuille non vide à gauche
+                    else:
+                        self.hauteur = 1+max(self.gauche.hauteur,self.droit.hauteur)
+                    self = self.reequilibrageNoeud()
                 
             elif x > self.clef:
                 if self.droit is not None:
-                     self.droit.insertion(x)
+                    self.droit.insertion(x)
+                    if self.gauche is None:
+                        self.hauteur = 1+self.droit.hauteur
+                    else:
+                        self.hauteur=1+max(self.gauche.hauteur,self.droit.hauteur)
+                    self = self.reequilibrageNoeud()
+                    
                 #cas où le sous arbre droit est vide
                 else :
-                    self.droit = Arbre(x)
-            #s'il y a égalité il n'y a rien à faire
+                    self.droit = ArbreAVL(x)
+                    if self.gauche is None:
+                        self.hauteur = 2
+                    else:
+                        self.hauteur = 1 + max(self.gauche.hauteur,self.droit.hauteur)
+                    self = self.reequilibrageNoeud()
+                    
+                    
             
         #cas ou l'arbre est vide
         else:
             self.clef = x
-    
+            self.hauteur = 1
+            
 
     #fonction utilisé dans suppression
     def Max(self):
@@ -140,14 +173,7 @@ class Arbre:
         arbre réduit à un noeud : hauteur 1"""
         if self.clef == None:
             return 0
-        if self.gauche is None and self.droit is None:
-            return 1
-        if self.gauche is None:#l'arbre droit est forcément non vide
-            return self.droit.hauteur()+1
-        if self.droit is None:#l'arbre gauche est forcément non vide
-            return self.gauche.hauteur()+1
-        #les deux fils sont non vide:
-        return max(self.gauche.hauteur(),self.droit.hauteur())+1
+        return self.hauteur
         
     
     def parcoursInfixe(self):
@@ -182,7 +208,7 @@ class Arbre:
             
 
     def hauteurMin(self):
-        """On renvoit la hauteur miniamal.
+        """On renvoit la hauteur minimal.
         convention : arbre vide de hauteur 0
         arbre réduit à un noeud : hauteur 1"""
         if self.clef == None:
@@ -196,29 +222,25 @@ class Arbre:
         #les deux fils sont non vide:
         return min(self.gauche.hauteur(),self.droit.hauteur())+1
             
-    def coeffEquilibreBis(self):
-        """renvoit un indicateur de l'équilibrage de l'arbre :
-            différence entre la hauteur min et la hauteur max.
-        """
-        if self.clef is None:
-            return 0
-        else:
-            return abs(self.hauteur-self.hauteurMin)
         
         
     def coeffEquilibre(self):
-        """coefficient plus classique, retourne la difference entre
-        la hauteur du sous arbre droit et celle du sous arbre gauche"""
+        """retourne la difference entre
+        la hauteur du sous arbre droit et celle du sous arbre gauche
+        un résultat négatif indique un désequilibre du côté gauche
+        (ie le côté gauche est plus gros)"""
         
         if self is None:
             return 0
-        if self.gauche is None and self.droit is None:
-            return 0
-        if self.gauche is None:
-            return self.droit.hauteur
-        if self.droit is None:
-            return self.gauche.hauteur
-        return self.gauche.hauteur - self.droit.hauteur
+        if self.gauche is not None :
+            if self.droit is None :
+                return -self.gauche.hauteur
+            else:
+                return self.droit.hauteur-self.gauche.hauteur
+        else:
+            if self.droit is not None:
+                return self.droit.hauteur
+        return 0
     
     def rotationGauche(self):
         """on fait une rotation gauche à l'arbre.
@@ -235,31 +257,49 @@ class Arbre:
         arbre_droit = self.droit.droit
         sous_arbre_gauche = self.gauche
         sous_arbre_droit = self.droit.gauche
-        return Arbre(racine,Arbre(clef_gauche,sous_arbre_gauche,sous_arbre_droit),arbre_droit)
+        arbre_gauche = ArbreAVL(clef_gauche,sous_arbre_gauche,sous_arbre_droit)
+        
+        return ArbreAVL(racine,arbre_gauche,arbre_droit)
     
-    def rotationDroit(self):
+    def rotationDroite(self):
         """rotation droite..."""
         racine = self.gauche.clef
         clef_droite = self.clef
         arbre_gauche = self.gauche.gauche
         sous_arbre_gauche = self.gauche.droit
         sous_arbre_droit = self.droit
-        return Arbre(racine,arbre_gauche,Arbre(clef_droite,sous_arbre_gauche,sous_arbre_droit))
+        arbre_droit = ArbreAVL(clef_droite,sous_arbre_gauche,sous_arbre_droit)
+        return ArbreAVL(racine,arbre_gauche,arbre_droit)
         
-    def reequilibrage(self):
-        """rééquilibrage de l'arbre.
+    def reequilibrageNoeud(self):
+        """rééquilibrage de l'arbre à partir d'un noeud dont on sait qu'il a besoin
+        d'un rééquilibrage
         dijsonction de cas puis rotations """
-        if abs(self.coeffEquilibre()) <= 1: #arbre déjà équilibré
+        diff_h = self.coeffEquilibre()
+        if abs(diff_h) <= 1: #arbre déjà équilibré
             return self
-        if self.coeffEquilibre() < -1 #cas où le plus grand sous arbre est à droite
+        if diff_h > 1: #cas où le plus grand sous arbre est à droite
+            if self.droit.coeffEquilibre() >= 0 :
+                return self.rotationGauche()
+            else: #le coeff vaut -1 : il faut faire deux rotations successives
+                self.droit = self.droit.rotationDroite()
+                return self.rotationGauche()
+                
+        else:#cas symétrique
+            if self.gauche.coeffEquilibre() <=0:
+                return self.rotationDroite()
+            else:
+                self.gauche = self.gauche.rotationGauche()
+                return self.rotationDroite()
+
+
+    def reequilibrageTotal(self):
+        return
             
-        
-        
-        
     def copy(self):
         """renvoie une copie de l'arbre
-        utilise un parcours en largeur itératif"""
-        res = Arbre(None)
+        utilise un parcours en profondeur itératif"""
+        res = ArbreAVL(None)
         if self.clef == None:
             return res
         else:
@@ -277,7 +317,7 @@ class Arbre:
         
     def taille(self):
         """renvoie la taille de l'arbre
-        utilise un parcours en largeur itératif"""
+        utilise un parcours en profondeur itératif"""
         cpt = 0
         if self.clef == None:
             return cpt
@@ -296,8 +336,8 @@ class Arbre:
     
                 
 def arbreAleatoire(n,m):
-    """renvoie un BSR de taille n initialisé par des valeurs entre 0 et m"""
-    res = Arbre(None,None,None)
+    """renvoie un arbre AVL de taille n initialisé par des valeurs entre 0 et m"""
+    res = ArbreAVL(None,None,None)
     for i in range(n):
         x = random.randrange(0,m)
         res.insertion(x)
