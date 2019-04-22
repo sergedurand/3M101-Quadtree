@@ -45,49 +45,40 @@ class ArbreAVL:
         return False
 
     def insertion(self,x):
-        if self.clef is not None:
-            if x<self.clef:
-                if self.gauche is not None:
-                    self.gauche.insertion(x)
-                    if self.droit is None:
-                        self.hauteur = 1 + self.gauche.hauteur
-                    else:
-                        self.hauteur = 1 + max(self.gauche.hauteur,self.droit.hauteur)
-                    self = self.reequilibrageNoeud()
-                #cas où le sous arbre gauche est vide
-                else :
-                    self.gauche = ArbreAVL(x)
-                    if self.droit is None:
-                        self.hauteur = 2 #à ce niveau l'arbre n'a qu'une feuille non vide à gauche
-                    else:
-                        self.hauteur = 1+max(self.gauche.hauteur,self.droit.hauteur)
-                    self = self.reequilibrageNoeud()
-                
-            elif x > self.clef:
-                if self.droit is not None:
-                    self.droit.insertion(x)
-                    if self.gauche is None:
-                        self.hauteur = 1+self.droit.hauteur
-                    else:
-                        self.hauteur=1+max(self.gauche.hauteur,self.droit.hauteur)
-                    self = self.reequilibrageNoeud()
-                    
-                #cas où le sous arbre droit est vide
-                else :
-                    self.droit = ArbreAVL(x)
-                    if self.gauche is None:
-                        self.hauteur = 2
-                    else:
-                        self.hauteur = 1 + max(self.gauche.hauteur,self.droit.hauteur)
-                    self = self.reequilibrageNoeud()
-                    
-                    
-            
-        #cas ou l'arbre est vide
-        else:
+        T_x = ArbreAVL(x)
+        if self.clef is None:
             self.clef = x
-            self.hauteur = 1
             
+        else:
+            temp = self
+            parents = []
+            while(temp is not None):
+                parents.append(temp)
+                pere_insertion = temp
+                if T_x.clef == temp.clef:
+                    return
+                if T_x.clef > temp.clef:
+                    temp = temp.droit
+                else:
+                    temp = temp.gauche
+            #on fait l'insertion, en mettant à jour la hauteur :
+            if T_x.clef > pere_insertion.clef :
+                pere_insertion.droit = T_x
+                if pere_insertion.gauche is None:
+                    pere_insertion.hauteur = 1
+            else:
+                pere_insertion.gauche = T_x
+                if pere_insertion.droit is None:
+                    pere_insertion.hauteur = 1
+            
+            #on repasse sur tout les parents pour rééquilibrer:
+            while(len(parents)>0):
+                y = parents.pop()
+                y = y.reequilibrageNoeud()
+        
+        
+        
+        
 
     #fonction utilisé dans suppression
     def Max(self):
@@ -134,37 +125,68 @@ class ArbreAVL:
         """on fait l'hypothèse que x est forcément dans l'arbre"""
         #cas 1 : arbre vide
         if(self.clef is None):
-            return None
-        #appels récursifs:
-        if x < self.clef:
-            #self.gauche n'est pas vide puisque x est dans l'arbre
-            self.gauche = self.gauche.suppression(x)
-        elif x > self.clef:
-            self.droit = self.droit.suppression(x)
-        #on a trouvé le noeud qui a x pour clef
+            return self
         else:
-            #si x n'a qu'un fils (ou aucun):
-            if self.gauche is None:
-                #si le gauche est vide on retourne le fils droit directement
-                #qui est éventuellement vide
-                temp = self.droit
-                self = None
-                return temp
-            elif self.droit is None:
-                #même idée, sauf que self.gauche est forcément non vide ici
-                temp = self.gauche
-                self = None
-                return temp
-            else: #c'est le cas où les deux fils sont non vide
-                #le successeur de x est le plus petit élément de son sous arbre droit:
-                succ = self.droit.Min()
-                self.clef = succ
-                #il reste à supprimer succ de l'arbre droit :
-                self.droit = self.droit.suppression(succ)
+            temp = self
+            parents = []
+            parent_cour = None
+            #identification de la position du noeud à supprimer
+            while(temp.clef!=x):
+                parent_cour = temp
+                parents.append(parent_cour)
+                if x < temp.clef:
+                    temp = temp.gauche
+                else:
+                    temp = temp.droit
+
+            #gestion suppression, distinction de cas comme pour ABR
+            if temp.gauche is None:
+                if temp.droit is not None:
+                    if temp.droit.droit is None:
+                        t_droit = None
+                    else:
+                        t_droit = temp.droit.droit
+                    if temp.droit.gauche is None:
+                        t_gauche = None
+                    else:
+                        t_gauche = temp.droit.gauche
+                    temp.clef = temp.droit.clef
+                    temp.droit = t_droit
+                    temp.gauche = t_gauche
+                else:
+                    if parent_cour is not None:
+                        if x < parent_cour.clef:
+                            parent_cour.gauche = None
+                        else:
+                            parent_cour.droit = None
+                            
+            elif temp.droit is None:
+                if temp.gauche.droit is None:
+                    t_droit = None
+                else:
+                    t_droit = temp.gauche.droit
                 
-        return self
+                if temp.gauche.gauche is None:
+                    t_gauche = None
+                else:
+                    t_gauche = temp.gauche.gauche
+                    
+                temp.clef = temp.gauche.clef
+                temp.gauche = t_gauche
+                temp.droit = t_droit
+            else: #cas ou les deux fils sont non vides
+                succ = temp.droit.Min()
+                temp.clef = succ
+                temp.droit = temp.droit.suppression(succ)
                 
-            
+            while(len(parents)>0):
+                y = parents.pop()
+                print(y.parcoursInfixe())
+                print(y.coeffEquilibre())
+                y = y.reequilibrageNoeud()
+                print(y.coeffEquilibre())
+                
+            return y
             
     
     
@@ -318,22 +340,26 @@ class ArbreAVL:
     def taille(self):
         """renvoie la taille de l'arbre
         utilise un parcours en profondeur itératif"""
-        cpt = 0
-        if self.clef == None:
-            return cpt
+        if self.clef is None:
+           return 0
+        if self.droit is None:
+           if self.gauche is None:
+               return 1
+           else:
+               return 1 + self.gauche.taille()
+           
         else:
-            f = []
-            f.append(self)
-            while(len(f)!=0):
-                racine = f.pop()
-                cpt += 1
-                if racine.gauche is not None:
-                    f.append(racine.gauche)
-                if racine.droit is not None:
-                    f.append(racine.droit)
-        return cpt
+            if self.gauche is None:
+                return 1+self.droit.taille()
+            else:
+                return 1+self.droit.taille() + self.gauche.taille()
     
-    
+
+def AVL_from_list(L):
+    res = ArbreAVL(None,None,None)
+    for x in L:
+        res.insertion(x)
+    return res
                 
 def arbreAleatoire(n,m):
     """renvoie un arbre AVL de taille n initialisé par des valeurs entre 0 et m"""

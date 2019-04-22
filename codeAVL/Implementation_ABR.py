@@ -221,7 +221,7 @@ class Arbre:
 	
 	
 			
-def BST_from_list(L):
+def arbre_from_list(L):
     res = Arbre(None,None,None)
     for x in L:
         res.insertion(x)
