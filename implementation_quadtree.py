@@ -17,13 +17,13 @@ def main():
             return (self.x >= point.x and self.y < point.y)
 
         def is_SW(self, point):
-            return (self.x >= point.x and self.y > point.y)
+            return (self.x > point.x and self.y >= point.y)
             
         def is_SE(self, point):
             return (self.x <= point.x and self.y > point.y)
 
         def is_NE(self, point):
-            return (self.x <= point.x and self.y < point.y)
+            return (self.x < point.x and self.y <= point.y)
 
         def distance(self, point):
             return ((self.x - point.x)**2 + (self.y - point.y)**2)**(1/2)
