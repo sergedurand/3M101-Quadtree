@@ -11,8 +11,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import csv
-import Implementation_AVL
-import Implementation_ABR
+import Implementation_AVL as AVL
+import Implementation_ABR as ABR
+import statistics
 
 def shuffled_ranges(n,m):
     """retourne m listes d'entiers entre 0 et n exclu, d'ordre
@@ -70,3 +71,42 @@ def distribution_hauteur_BST(L_arbres):
         res[h] = l_h.count(h)
     
     return res
+
+def median(data):
+    """renvoie la médiane d'un dictionnaire)
+    """
+    l_triee = []
+    for key,value in data.items():
+        for i in range(value):
+            l_triee.append(key)
+    l_triee = sorted(l_triee)
+    taille = len(l_triee)
+    if(taille%2 == 0):
+        return l_triee[taille//2]
+    else:
+        return (l_triee[taille//2]+l_triee[taille//2+1])/2.0
+    
+
+def moyenne(data):
+    """renvoie la moyenne d'un dictionnaire"""
+    q = 0
+    v = 0
+    for key,value in data.items():
+        v = v+key*value
+        q = q + value
+    return v/q
+
+def graphe_distribution_hauteur(taille):
+    l_arbres = batch_tree_BST(taille,1000)
+    freq_haut = distribution_hauteur_BST(l_arbres)
+    listes = sorted(freq_haut.items())
+    x,y = zip(*listes)
+    print("hauteur médiane = ",median(freq_haut))
+    print("hauteur moyenne = ",moyenne(freq_haut))
+    print("Hn/Log(n) = ",moyenne(freq_haut)/math.log(taille))
+    print("max : ",listes[len(listes)-1][0])
+    plt.plot(x,y)
+    plt.axvline(4.31*math.log(taille),color="black",label="log(n)")
+    plt.legend()
+    plt.show()
+

@@ -26,6 +26,7 @@ class ArbreAVL:
                 h=h+droit.hauteur
         self.hauteur = h
         
+        
     def getClef(self):
         return self.clef
     
@@ -48,7 +49,8 @@ class ArbreAVL:
         T_x = ArbreAVL(x)
         if self.clef is None:
             self.clef = x
-            
+            return self
+        
         else:
             temp = self
             parents = []
@@ -56,7 +58,7 @@ class ArbreAVL:
                 parents.append(temp)
                 pere_insertion = temp
                 if T_x.clef == temp.clef:
-                    return
+                    return self
                 if T_x.clef > temp.clef:
                     temp = temp.droit
                 else:
@@ -74,9 +76,10 @@ class ArbreAVL:
             #on repasse sur tout les parents pour rééquilibrer:
             while(len(parents)>0):
                 y = parents.pop()
+                y.hauteur = y.updateHauteur()
                 y = y.reequilibrageNoeud()
         
-        
+            return y
         
         
 
@@ -118,7 +121,19 @@ class ArbreAVL:
         return (self.gauche == None and self.droit == None)
     
     
-    
+    def updateHauteur(self):
+        if self.droit is None:
+            if self.gauche is None:
+                return 1
+            else:
+                return 1+self.gauche.hauteur
+        else:
+            if self.gauche is None:
+                return 1+self.droit.hauteur
+            else:
+                return 1+max(self.gauche.hauteur,self.droit.hauteur)
+            
+            
     #suppression : on distingue les 3 possibilités en fonction
     #du nombre d'enfant. On sépare les fonction pour la lisibilité
     def suppression(self,x):
@@ -181,10 +196,7 @@ class ArbreAVL:
                 
             while(len(parents)>0):
                 y = parents.pop()
-                print(y.parcoursInfixe())
-                print(y.coeffEquilibre())
                 y = y.reequilibrageNoeud()
-                print(y.coeffEquilibre())
                 
             return y
             
@@ -366,7 +378,7 @@ def arbreAleatoire(n,m):
     res = ArbreAVL(None,None,None)
     for i in range(n):
         x = random.randrange(0,m)
-        res.insertion(x)
+        res = res.insertion(x)
     return res
 
 
