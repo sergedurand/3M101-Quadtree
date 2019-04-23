@@ -96,17 +96,28 @@ def moyenne(data):
         q = q + value
     return v/q
 
-def graphe_distribution_hauteur(taille):
+def graphe_distribution_hauteur(taille,nom_fichier = None):
+    """renvoie le graphe avec les hauteurs en abscisses et le nombre d'arbres en ordonnées,
+    pour 1000 arbres étiquetés de 1 à taille aléatoirement """
     l_arbres = batch_tree_BST(taille,1000)
     freq_haut = distribution_hauteur_BST(l_arbres)
     listes = sorted(freq_haut.items())
     x,y = zip(*listes)
     print("hauteur médiane = ",median(freq_haut))
     print("hauteur moyenne = ",moyenne(freq_haut))
-    print("Hn/Log(n) = ",moyenne(freq_haut)/math.log(taille))
+    K = moyenne(freq_haut)/math.log(taille)
+    print("K = Hn/Log(n) = ",K)
     print("max : ",listes[len(listes)-1][0])
+    fig = plt.figure()
     plt.plot(x,y)
-    plt.axvline(4.31*math.log(taille),color="black",label="log(n)")
+    stringK = "{:.2f}".format(K)
+    fig.suptitle('distribution des arbres en fonction de leur hauteur')
+    plt.xlabel('hauteur')
+    plt.ylabel('arbres')
+    plt.axvline(K*math.log(taille),color="black",label=stringK+"log(n)")
+    if(nom_fichier is not None):
+        fig.savefig(nom_fichier)
     plt.legend()
     plt.show()
+    
 
