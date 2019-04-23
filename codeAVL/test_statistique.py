@@ -24,16 +24,6 @@ def shuffled_ranges(n,m):
         res.append(random.sample(L1,len(L1)))
     return res
 
-def graphe(L1,L2,nom_fichier=None): #graphe obtenu par les mesures
-    x = np.array(L1)
-    y = np.array(L2)
-    fig = plt.figure()
-    plt.xlim(L1[0],L1[len(L1)-1])
-    plt.plot(x,y)
-    if(nom_fichier is not None):
-        fig.savefig('CalculSigma2.png')
-    plt.show()
-
 def batch_tree_BST(n,m):
     listes = shuffled_ranges(n,m)
     res = []
@@ -111,7 +101,7 @@ def graphe_distribution_hauteur(taille,nom_fichier = None):
     fig = plt.figure()
     plt.plot(x,y)
     stringK = "{:.2f}".format(K)
-    fig.suptitle('distribution des arbres en fonction de leur hauteur')
+    fig.suptitle('répartition des hauteurs en fonction de leur fréquences')
     plt.xlabel('hauteur')
     plt.ylabel('arbres')
     plt.axvline(K*math.log(taille),color="black",label=stringK+"log(n)")
@@ -120,4 +110,15 @@ def graphe_distribution_hauteur(taille,nom_fichier = None):
     plt.legend()
     plt.show()
     
-
+def hauteur_max(n):
+    h = 0
+    for i in range(1):
+         l_arbres = batch_tree_BST(n,50000) 
+         freq_haut = distribution_hauteur_BST(l_arbres)
+         listes = sorted(freq_haut.items())
+         x,y = zip(*listes)
+         temp = x[len(x)-1]
+         if temp>h:
+             h=temp
+    
+    return h
