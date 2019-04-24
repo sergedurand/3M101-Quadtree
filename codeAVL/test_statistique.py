@@ -51,7 +51,8 @@ def distribution_hauteur_AVL(L_arbres):
     return res
 
 def distribution_hauteur_BST(L_arbres):
-    """renvoie la fréquences des hauteur dans un dictionnaire 
+    """
+    renvoie la fréquences des hauteur dans un dictionnaire 
     indexé par les hauteurs"""
     res = {}
     l_h = []
@@ -112,8 +113,8 @@ def graphe_distribution_hauteur(taille,nom_fichier = None):
     
 def hauteur_max(n):
     h = 0
-    for i in range(1):
-         l_arbres = batch_tree_BST(n,50000) 
+    for i in range(5):
+         l_arbres = batch_tree_BST(n,1000) 
          freq_haut = distribution_hauteur_BST(l_arbres)
          listes = sorted(freq_haut.items())
          x,y = zip(*listes)
@@ -122,3 +123,4 @@ def hauteur_max(n):
              h=temp
     
     return h
+
