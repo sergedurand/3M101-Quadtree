@@ -173,7 +173,7 @@ class Quadtree():
 	def fusion(self,noeud):
 		"""fonction qui sert dans la suppression si on suprime un point et puis dans le quadrant il ne reste plus qu'n seul noued on doit fusioner ce point avec son pere
 			et c'est possible que meme ce pere est aussi le seul fils donc il faut une recursion"""
-		pere=self.recherche_pere(noued.point)
+		pere=self.recherche_pere(noeud.point)
 		pere.point=noeud.point
 		pere.NW=None
 		pere.NE=None

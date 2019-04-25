@@ -5,7 +5,6 @@ Created on Mon Apr 22 19:25:01 2019
 @author: Serge
 """
 
-import time
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -25,10 +24,12 @@ def shuffled_ranges(n,m):
     return res
 
 def batch_tree_BST(n,m):
+    """retourne m arbres aléatoirement générés,
+    étiquetés sur {1,..,n}"""
     listes = shuffled_ranges(n,m)
     res = []
     for l in listes:
-        res.append(BST_from_list(l))
+        res.append(ABR.BST_from_list(l))
     return res
         
 def batch_tree_AVL(n,m):
@@ -106,10 +107,76 @@ def graphe_distribution_hauteur(taille,nom_fichier = None):
     plt.xlabel('hauteur')
     plt.ylabel('arbres')
     plt.axvline(K*math.log(taille),color="black",label=stringK+"log(n)")
+    plt.legend()
     if(nom_fichier is not None):
         fig.savefig(nom_fichier)
-    plt.legend()
     plt.show()
+    
+    
+
+    
+def graphe_complexite(n,nb_tests,fonction,nom_fichier=None):
+    """à chaque étape on créé un arbre binaire, on applique la fonction sur nb_éléments
+    aléatoires, on divise par nb_éléments la durée obtenue. On itère sur la taille 
+    de l'arbre jusqu'à atteindre un arbre de taille n. Le saut dans 
+    l'itération dépend de la valeur de n, on espace les itérations pour 
+    les grandes tailles"""
+    import timeit
+    if(n<100):
+        print("insérer un nombre plus grand que 100 pour avoir des données significatives")
+        return
+    if fonction not in {"suppression","insertion","recherche"}:
+        print("le nom de la fonction n'est pas bon. Il faut mettre 'insertion', 'suppression' ou 'recherche'")
+        return
+    i = 400
+    l_taille = []
+    l_temps = []
+    def recherche_liste(arbre,l_elem):
+        for x in l_elem:
+            arbre.recherche(x)
+    def insertion_liste(arbre,l_elem):
+        for x in l_elem:
+            arbre.insertion(x)
+    def suppression_liste(arbre,l_elem):
+        for x in l_elem:
+            arbre.suppression(x)
+    
+    while(i<=n):
+        arbre = ABR.arbreAleatoire(i,i)
+        #génère une liste de nb_tests éléments disctincts de {0,...,i}
+        l_elems = random.sample(range(i),nb_tests)
+        if fonction is "recherche":
+            t = timeit.timeit('recherche_liste(arbre,l_elems)',number=1,globals={'recherche_liste':recherche_liste,'arbre': arbre,'l_elems':l_elems})
+        if fonction is "insertion":
+            t = timeit.timeit('insertion_liste(arbre,l_elems)',number=1,globals={'insertion_liste':insertion_liste,'arbre': arbre,'l_elems':l_elems})
+        if fonction is "suppression":
+            t = timeit.timeit('suppression_liste(arbre,l_elems)',number=1,globals={'suppression_liste':suppression_liste,'arbre': arbre,'l_elems':l_elems})
+        l_taille.append(i)
+        l_temps.append(t/(nb_tests*1.0))
+        if(i<5000):
+            i=i+20
+        else:
+            i=i+100
+    l_log = [math.log(x,2) for x in l_taille]
+    taux = l_taille[len(l_taille)//2]/l_temps[len(l_temps)//2]
+    l_temps_bis = [x*taux for x in l_temps]
+    l_const = [l_temps[k]/l_log[k] for k in range(len(l_temps))]
+    fig = plt.figure()
+    strtaux = "{:.2f}".format(taux)
+    plt.plot(l_taille,l_temps_bis,label="temps moyen mesuré, multiplié par "+strtaux+" pour comparer avec la courbe linéaire")
+    plt.plot(l_taille,l_taille,label="y=x")
+    plt.xlabel("taille")
+    plt.ylabel("temps d'exécution")
+    fig.suptitle("temps d'exécution en fonction de la taille pour la fonction "+fonction)
+    plt.legend()  
+    plt.show()
+    if(nom_fichier is not None):
+        fig.savefig(nom_fichier)
+    
+    
+        
+    
+    
     
 def hauteur_max(n):
     h = 0

@@ -37,4 +37,6 @@ class Quadtree():
         self.SW = SW
         self.SE = SE
         self.NE = NE
-
+        
+    
+    
