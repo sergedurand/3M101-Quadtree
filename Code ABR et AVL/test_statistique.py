@@ -115,20 +115,20 @@ def graphe_distribution_hauteur(taille,nom_fichier = None):
     
 
     
-def graphe_complexite(n,nb_tests,fonction,nom_fichier=None):
+def graphe_complexite(taille_max,nb_tests,fonction,nom_fichier=None):
     """à chaque étape on créé un arbre binaire, on applique la fonction sur nb_éléments
     aléatoires, on divise par nb_éléments la durée obtenue. On itère sur la taille 
-    de l'arbre jusqu'à atteindre un arbre de taille n. Le saut dans 
-    l'itération dépend de la valeur de n, on espace les itérations pour 
+    de l'arbre jusqu'à atteindre un arbre de taille taille_max. Le saut dans 
+    l'itération dépend de la valeur de taille_max, on espace les itérations pour 
     les grandes tailles"""
     import timeit
-    if(n<100):
+    if(taille_max<100):
         print("insérer un nombre plus grand que 100 pour avoir des données significatives")
         return
     if fonction not in {"suppression","insertion","recherche"}:
         print("le nom de la fonction n'est pas bon. Il faut mettre 'insertion', 'suppression' ou 'recherche'")
         return
-    i = 400
+    i = 1000
     l_taille = []
     l_temps = []
     def recherche_liste(arbre,l_elem):
@@ -141,7 +141,7 @@ def graphe_complexite(n,nb_tests,fonction,nom_fichier=None):
         for x in l_elem:
             arbre.suppression(x)
     
-    while(i<=n):
+    while(i<=taille_max):
         arbre = ABR.arbreAleatoire(i,i)
         #génère une liste de nb_tests éléments disctincts de {0,...,i}
         l_elems = random.sample(range(i),nb_tests)
@@ -155,8 +155,10 @@ def graphe_complexite(n,nb_tests,fonction,nom_fichier=None):
         l_temps.append(t/(nb_tests*1.0))
         if(i<5000):
             i=i+20
+        elif(i<50000):
+            i=i+500
         else:
-            i=i+100
+            i=i+1000
     l_temps_bis = [x*1000000 for x in l_temps]
     l_taux = [l_temps_bis[i]/math.log(l_taille[i],2) for i in range(len(l_temps_bis))]
     taux_log = np.median(l_taux)
@@ -172,11 +174,11 @@ def graphe_complexite(n,nb_tests,fonction,nom_fichier=None):
     fig.suptitle("temps d'exécution de la méthode "+fonction+" en fonction de la taille")
     plt.legend()  
     plt.show()
-    l_temps_ter = [l_temps_bis[i]/math.log(l_taille[i],2) for i in range(len(l_temps_bis))]
+    l_temps_ter = [2**l_temps_bis[i] for i in range(len(l_temps_bis))]
     fig2 = plt.figure(2,figsize=(11,8))
-    plt.plot(l_taille,l_temps_ter,label="y/log(n)")
+    plt.plot(l_taille,l_temps_ter,label="2^t en fonction de n")
     plt.xlabel("taille de l'arbre")
-    plt.ylabel("temps d'exécution en μs / log(taille)")
+    plt.ylabel("2^(temps d'exécution en μs)")
     plt.legend()
     plt.show()
     if(nom_fichier is not None):
