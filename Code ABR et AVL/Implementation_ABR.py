@@ -54,7 +54,36 @@ class Arbre:
         else:
             self.clef = x
     
-
+    def insertion_cpt(self,x,cpt=0):
+        if self.clef is not None:
+            if x<self.clef:
+                cpt += 1
+                if self.gauche is not None:
+                    cpt = self.gauche.insertion_cpt(x,cpt)
+                    return cpt
+                #cas où le sous arbre gauche est vide
+                else :
+                    cpt += 1
+                    self.gauche = Arbre(x)
+                    return cpt
+                
+            elif x > self.clef:
+                cpt += 1
+                if self.droit is not None:
+                     cpt = self.droit.insertion_cpt(x,cpt)
+                     return cpt
+                #cas où le sous arbre droit est vide
+                else :
+                    self.droit = Arbre(x)
+                    return cpt
+            #s'il y a égalité il n'y a rien à faire
+            
+        #cas ou l'arbre est vide
+        else:
+            self.clef = x
+            return cpt
+            
+            
     #fonction utilisé dans suppression
     def Max(self):
         if self.clef == None:
@@ -224,7 +253,55 @@ class Arbre:
                     f.append(racine.droit)
         return cpt
     
-    
+    def display(self):
+        lines, _, _, _ = self._display_aux()
+        for line in lines:
+            print(line)
+
+    def _display_aux(self):
+        """Returns list of strings, width, height, and horizontal coordinate of the root."""
+        # No child.
+        if self.droit is None and self.gauche is None:
+            line = '%s' % self.clef
+            width = len(line)
+            height = 1
+            middle = width // 2
+            return [line], width, height, middle
+
+        # Only left child.
+        if self.droit is None:
+            lines, n, p, x = self.gauche._display_aux()
+            s = '%s' % self.clef
+            u = len(s)
+            first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s
+            second_line = x * ' ' + '/' + (n - x - 1 + u) * ' '
+            shifted_lines = [line + u * ' ' for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, n + u // 2
+
+        # Only right child.
+        if self.gauche is None:
+            lines, n, p, x = self.droit._display_aux()
+            s = '%s' % self.clef
+            u = len(s)
+            first_line = s + x * '_' + (n - x) * ' '
+            second_line = (u + x) * ' ' + '\\' + (n - x - 1) * ' '
+            shifted_lines = [u * ' ' + line for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, u // 2
+
+        # Two children.
+        left, n, p, x = self.gauche._display_aux()
+        right, m, q, y = self.droit._display_aux()
+        s = '%s' % self.clef
+        u = len(s)
+        first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s + y * '_' + (m - y) * ' '
+        second_line = x * ' ' + '/' + (n - x - 1 + u + y) * ' ' + '\\' + (m - y - 1) * ' '
+        if p < q:
+            left += [n * ' '] * (q - p)
+        elif q < p:
+            right += [m * ' '] * (p - q)
+        zipped_lines = zip(left, right)
+        lines = [first_line, second_line] + [a + u * ' ' + b for a, b in zipped_lines]
+        return lines, n + m + u, max(p, q) + 2, n + u // 2   
             
 def BST_from_list(L):
     res = Arbre(None,None,None)
@@ -235,7 +312,6 @@ def BST_from_list(L):
 
 def arbreAleatoire(n,m):
     """renvoie un BSR de taille n initialisé par des valeurs entre 0 et m"""
-    
     L = random.sample(range(m),n)
     return BST_from_list(L)
 

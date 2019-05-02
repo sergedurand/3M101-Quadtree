@@ -77,8 +77,8 @@ class ArbreAVL:
             while(len(parents)>0):
                 y = parents.pop()
                 y.hauteur = y.updateHauteur()
-                y = y.reequilibrageNoeud()
-        
+                y = y.reequilibrageFils()
+                
             return y
         
         
@@ -196,8 +196,10 @@ class ArbreAVL:
                 
             while(len(parents)>0):
                 y = parents.pop()
-                y = y.reequilibrageNoeud()
+                y.hauteur = y.updateHauteur()
+                y = y.reequilibrageFils()
                 
+            y = self.reequilibrageFils()
             return y
             
     
@@ -250,13 +252,25 @@ class ArbreAVL:
         if self.gauche is None and self.droit is None:
             return 1
         if self.gauche is None:#l'arbre droit est forcément non vide
-            return self.droit.hauteur()+1
+            return self.droit.hauteurMin()+1
         if self.droit is None:#l'arbre gauche est forcément non vide
-            return self.gauche.hauteur()+1
+            return self.gauche.hauteurMin()+1
         #les deux fils sont non vide:
-        return min(self.gauche.hauteur(),self.droit.hauteur())+1
-            
-        
+        return min(self.gauche.hauteurMin(),self.droit.hauteurMin())+1
+
+    def hauteurMax(self):
+        """convention : arbre vide de hauteur 0
+        arbre réduit à un noeud : hauteur 1"""
+        if self.clef == None:
+            return 0
+        if self.gauche is None and self.droit is None:
+            return 1
+        if self.gauche is None:#l'arbre droit est forcément non vide
+            return self.droit.hauteurMax()+1
+        if self.droit is None:#l'arbre gauche est forcément non vide
+            return self.gauche.hauteurMax()+1
+        #les deux fils sont non vide:
+        return max(self.gauche.hauteurMax(),self.droit.hauteurMax())+1
         
     def coeffEquilibre(self):
         """retourne la difference entre
@@ -327,8 +341,15 @@ class ArbreAVL:
                 return self.rotationDroite()
 
 
-    def reequilibrageTotal(self):
-        return
+    def reequilibrageFils(self):
+        """rééquilibre les deux fils de l'arbre sur lequel 
+        la fonction est appelée"""
+        if self.gauche is not None:
+            self.gauche = self.gauche.reequilibrageNoeud()
+        if self.droit is not None:
+            self.droit = self.droit.reequilibrageNoeud()
+        self.hauteur = self.updateHauteur()
+        return self.reequilibrageNoeud()
             
     def copy(self):
         """renvoie une copie de l'arbre
@@ -365,7 +386,56 @@ class ArbreAVL:
                 return 1+self.droit.taille()
             else:
                 return 1+self.droit.taille() + self.gauche.taille()
-    
+            
+    def display(self):
+        lines, _, _, _ = self._display_aux()
+        for line in lines:
+            print(line)
+
+    def _display_aux(self):
+        """Returns list of strings, width, height, and horizontal coordinate of the root."""
+        # No child.
+        if self.droit is None and self.gauche is None:
+            line = '%s' % self.clef
+            width = len(line)
+            height = 1
+            middle = width // 2
+            return [line], width, height, middle
+
+        # Only left child.
+        if self.droit is None:
+            lines, n, p, x = self.gauche._display_aux()
+            s = '%s' % self.clef
+            u = len(s)
+            first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s
+            second_line = x * ' ' + '/' + (n - x - 1 + u) * ' '
+            shifted_lines = [line + u * ' ' for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, n + u // 2
+
+        # Only right child.
+        if self.gauche is None:
+            lines, n, p, x = self.droit._display_aux()
+            s = '%s' % self.clef
+            u = len(s)
+            first_line = s + x * '_' + (n - x) * ' '
+            second_line = (u + x) * ' ' + '\\' + (n - x - 1) * ' '
+            shifted_lines = [u * ' ' + line for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, u // 2
+
+        # Two children.
+        left, n, p, x = self.gauche._display_aux()
+        right, m, q, y = self.droit._display_aux()
+        s = '%s' % self.clef
+        u = len(s)
+        first_line = (x + 1) * ' ' + (n - x - 1) * '_' + s + y * '_' + (m - y) * ' '
+        second_line = x * ' ' + '/' + (n - x - 1 + u + y) * ' ' + '\\' + (m - y - 1) * ' '
+        if p < q:
+            left += [n * ' '] * (q - p)
+        elif q < p:
+            right += [m * ' '] * (p - q)
+        zipped_lines = zip(left, right)
+        lines = [first_line, second_line] + [a + u * ' ' + b for a, b in zipped_lines]
+        return lines, n + m + u, max(p, q) + 2, n + u // 2   
 
 def AVL_from_list(L):
     res = ArbreAVL(None,None,None)
@@ -374,12 +444,10 @@ def AVL_from_list(L):
     return res
                 
 def arbreAleatoire(n,m):
-    """renvoie un arbre AVL de taille n initialisé par des valeurs entre 0 et m"""
-    res = ArbreAVL(None,None,None)
-    for i in range(n):
-        x = random.randrange(0,m)
-        res = res.insertion(x)
-    return res
+    """renvoie un arbre AVL de taille n 
+    initialisé par des valeurs entre 0 et m"""
+    L = random.sample(range(m),n)
+    return AVL_from_list(L)
 
 
 #le test
