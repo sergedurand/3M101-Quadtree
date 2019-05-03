@@ -84,36 +84,26 @@
 }
 \begin{document}
 Implémentation d’un quadtree en Pyhton :
-Pour implémenter un quadtree « point », il existe plusieurs méthodes. Celle présentée dans ce rapport nécessite 2 classes pour construire la classe « quadtree » :
+Pour implémenter un quadtree « point », il existe plusieurs méthodes. Celle présentée dans ce rapport nécessite 2 classes :
 \begin{itemize}
 \item Une classe « point » : ici, nous travaillons en deux dimensions donc un point est représenté par deux coordonnées
-\item Une classe « nœud » : dans un quadtree chaque nœud correspond à un rectangle dans le plan. Chaque fils d’un nœud correspond à un quadrant du rectangle du nœud 
+\item Une classe « quadtree » : dans un quadtree chaque noeud correspond à un point dans le plan. Les fils d’un point correspond aux quadrants Nord-Ouest, Sud-Ouest, Sud-Est et Nord-Est. Chaque noeud a donc au plus quatre fils.
 \end{itemize}
-Un quadtree correspond alors à une subdivision du rectangle associé au nœud. Le but est de subdiviser chaque rectangle jusqu’à ce qu’il ne contienne qu’au plus 1 point.
-La construction se fait récursivement. La situation initiale est un rectangle contenant tous les points. S’il y a plus d’un point dans le rectangle alors on divise le rectangle en 4 quadrants disjoints de même taille : Nord-Ouest, Sud-Ouest, Sud-Est, Nord-Est. Puis on associe chaque point au quadrant à qui il appartient. De même, s’il y a plus d’un point dans l’un des quadrants alors on le divise à nouveau en 4 sous-quadrants. Par récurrence, on quadrille l’ensemble du plan.
-Un nœud est donc une feuille si le quadrant associé contient un unique point, sinon il est interne.
+
 \begin{lstlisting}
 class Point() :
-	def __init__(self,x,y) :
+	def __init__(self,ID,x,y) :
+		self.ID = ID
 		self.x = x
 		self.y = y
 \end{lstlisting}
 
-On définit une fonction pour vérifier si deux points ont les mêmes coordonnées : 
+On définit une fonction pour vérifier si deux points ont les mêmes identifiants : 
 \begin{lstlisting}
 def is_equal(self, point) :
-	return (self.x == point.x and self.y == point.y)
+	return (self.ID == point.ID)
 \end{lstlisting}
 
-On caractérise également des fonctions qui retournent la coordonnée x ou la coordonnée y d’un point :
-\begin{lstlisting}
-def get_x(self):
-	return self.x
-	
-def get_y(self):
-	return self.y
-\end{lstlisting}
- 
 Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la position d’un point en fonction d’un autre c’est-à-dire si un point se trouve au Nord-Ouest, au Sud-Ouest, au Sud-Est ou au Nord-Est d’un autre. Evidemment, si un point est égal à un autre, il n'est dans aucune de ces quatre situations. De plus, il est nécessaire de traiter les cas singuliers où un point serait exactement à la frontière entre plusieurs quadrants. On suivra arbitrairement les règles décrites par la figure~\ref{fig_imp_QT}.
 
 
@@ -170,22 +160,19 @@ Pour définir par la suite un quadtree, il est crucial de pouvoir déterminer la
 \draw (255.5,52) node   {$y$};
 \end{tikzpicture}
 \caption{Règles pour la localisation des points situés sur une frontière entre deux quadrants}
-\label{fig_imp_QT}
+\label{fig:imp_QT}
 \end{fig}
 
+Par exemple, pour savoir si un point est au Nord-Ouest (north-west) d'un autre :
+
 \begin{lstlisting}
-def is_NW(self, point):  #le point est au nord-ouest du self
+def is_NW(self, point):  
+	""" fonction qui renvoie si le point entré en paramètre se situe au nord-ouest du self
+         a.is_NW(b) = True --> le point b est au nord-ouest du point a
+        """
 	return (self.x >= point.x and self.y < point.y)
 		
-def is_SW(self, point):
-	return (self.x > point.x and self.y >= point.y)
-		
-def is_SE(self, point):
-	return (self.x <= point.x and self.y > point.y)
-		
-def is_NE(self, point):
-	return (self.x < point.x and self.y <= point.y)
-\end{lstlisting} 
+Il en va de même pour les autres quadrants en modifiant les inégalités (larges ou strictes) selon la figure~\ref{fig:imp_QT}
 
 
 
@@ -196,17 +183,88 @@ def distance(self, point) :
 \end{lstlisting}
 
 
-On implémente maintenant la classe « arbre » :
+On implémente maintenant la classe « quadtree » :
 \begin{lstlisting}
-class Arbre() :
-	def __init__(self, point, ID, NW, SW, SE, NE)
+class QuadtreePoint() :
+	def __init__(self, point, NW, SW, SE, NE)
 		self.point = point
-		self.ID = ID
 		self.NW = NW
 		self.SW = SW
 		self.SE = SE
 		self.NE = NE
 \end{lstlisting}
 
+\subsection{Recherche}
+
+La recherche s'implémente de manière très analogue à celle des ABR. La différence réside uniquement dans le nombre de fils qui est doublé. On procède à nouveau en quatre étapes:
+\begin{itemize}
+	\item on compare avec le point racine, si l'égalité est vérifiée, on le renvoie directement
+	\item sinon, on teste si la valeur recherchée est dans le quadrant NW, si elle l'est, on fait donc un appel récursif sur ce dernier
+	\item on répète l'étape précédente pour chaque quadrant, jusqu'à atteindre la valeur recherchée
+	\item et finalement si on atteint un point n'ayant pas de quadrant et que son identifiant n'est pas l'élément recherché alors l'élément ne se trouve pas dans le quadtree
+\end{itemize}
+
+\begin{lstlisting}
+    def recherche(self, x):
+        """ recherche d'un point x dans le quadtree """
+        if self.point.ID is None:
+            return "le quadtree est vide"
+
+        if self.point.is_equal(x):
+            return self
+        else:
+            if self.point.is_NW(x):
+                if self.NW is not None:
+                    return self.NW.recherche(x)
+                else:
+                    return "le quadrant NW est vide"
+            elif self.point.is_SW(x):
+                if self.SW is not None:
+                    return self.SW.recherche(x)
+                else:
+                    return "le quadrant SW est vide"
+            elif self.point.is_SE(x):
+                if self.SE is not None:
+                    return self.SE.recherche(x)
+                else:
+                    return "le quadrant SE est vide"
+            elif self.point.is_NE(x):
+                if self.NE is not None:
+                    return self.NE.recherche(x)
+                else:
+                    return "le quadrant NE est vide"
+\end{lstlisting}
+
+\subsectin{Insertion}
+
+Ici aussi, l'implémentation est très proche de celle des ABR. Pour insérer un nouveau point dans un quadtree, il faut savoir où il doit se situer.  
+
+\begin{lstlisting}
+    def insertion(self,x):
+        """ insertion d'un point x dans le quadtree """
+        if self.point is not None:
+            if self.point.is_NW(x):
+                if self.NW is None:
+                    self.NW = Quadtree(x)
+                else:
+                    self.NW.insertion(x)
+            elif self.point.is_SW(x):
+                if self.SW is None:
+                    self.SW = Quadtree(x)
+                else:
+                    self.SW.insertion(x)
+            elif self.point.is_SE(x):
+                if self.SE is None:
+                    self.SE = Quadtree(x)
+                else:
+                    self.SE.insertion(x)
+            elif self.point.is_NE(x):
+                if self.NE is None:
+                    self.NE = Quadtree(x)
+                else:
+                    self.NE.insertion(x)
+        else:
+            self.point = x
+\end{lstlisting}
 
 \end{document}
