@@ -4,6 +4,7 @@
 import random
 import time
 import sys
+import itertools as it
 
 
 class Arbre:
@@ -255,8 +256,10 @@ class Arbre:
     
     def display(self):
         lines, _, _, _ = self._display_aux()
+        s =""
         for line in lines:
             print(line)
+        return s
 
     def _display_aux(self):
         """Returns list of strings, width, height, and horizontal coordinate of the root."""
@@ -315,6 +318,50 @@ def arbreAleatoire(n,m):
     L = random.sample(range(m),n)
     return BST_from_list(L)
 
+
+def liste_complete_arbre(n):
+    """renvoie tout les arbres étiquetés entre 1 et n, avec doublons éventuels"""
+    L = it.permutations([x for x in range(1,n+1)])
+    res = []
+    for l in L:
+        res.append(BST_from_list(list(l)))
+    return res
+
+def analyse_hauteur_max(liste_arbre,n):
+    """renvoie le nombre d'arbre atteignant la hauteur
+    maximum possible = n.
+    on suppose que les arbres sont tous de taille n"""
+    cpt = 0
+    for arbre in liste_arbre:
+        if arbre.hauteur()==n:
+            cpt += 1
+    
+    return cpt
+
+def analyse_hauteur_max_n(n):
+    liste_arbre = liste_complete_arbre(n)
+    c = analyse_hauteur_max(liste_arbre,n)
+    freq = float(c)/len(liste_arbre)
+    print("nombre total d'arbre de taille et de hauteur " + str(n) + " = " + str(c))
+    return(round(freq*100,1))
+
+def analyse_hauteur_borne(liste_arbre,k):
+    """renvoie le nombre d'arbre dont la hauteur dépasse k"""
+    cpt = 0
+    for arbre in liste_arbre:
+        if arbre.hauteur()>=k:
+            cpt += 1
+    
+    return cpt
+
+def analyse_hauteur_borne_k(k,n):
+    liste_arbre = liste_complete_arbre(n)
+    c = analyse_hauteur_borne(liste_arbre,k)
+    freq = float(c)/len(liste_arbre)
+    print("nombre total d'arbre de taille " +str(n) + " dont la hauteur est superieure ou égale à " + str(k) + " = " + str(c))
+    return(round(freq*100,1))
+
+    
 
 #le test
 def main_loop():

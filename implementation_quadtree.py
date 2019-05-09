@@ -118,14 +118,48 @@ class Quadtree():
         else:
             self.point = x
 
+    def is_leaf(self):
+        if self.point is None:
+            return None
+        return (self.NW is None and self.NE is None and self.SW is None and self.SE is None)
+
+    def suppression(self,x):
+        """suppression de l'élément x de l'arbre
+        renvoie l'arbre après la suppression
+        """
+        if self.point is None:
+            return self
+        
+        temp = self
+        #while(temp.point.ID!=x and (self.point.NW is not None or self.point.)
+        
+
+def Quadtree_from_list(L):
+    """construit un quadtree à partir d'une liste de triplet (ID,x,y)"""
+    T = Quadtree(None)
+    for triplet in L:
+        pt = Point(triplet[0],triplet[1],triplet[2])
+        T.insertion(pt)
+    return T
+
+def creation_liste_triplet_aleatoire(n,p,q):
+    Lx = random.sample(range(-p,p+1),n)
+    Ly = random.sample(range(-q,q+1),n)
+    res = []
+    for i in range(n):
+        triplet = (i,Lx[i],Ly[i])
+        res.append(triplet)
+    return res
 
 def Quadtree_Aleatoire(n, p, q):
     """ renvoie un quadtree aléatoire de taille n dont les points ont leurs coordonnées (x,y) telles que
-     x \in [0,p] et y \in [0,q]"""
+     x \in [-p,p] et y \in [-q,q]"""
     T = Quadtree(None)
+    Lx = random.sample(range(-p,p+1),n)
+    Ly = random.sample(range(-q,q+1),n)
     for i in range(n):
-        x = random.randrange(0, p)
-        y = random.randrange(0, q)
+        x = random.randrange(-p, p+1)
+        y = random.randrange(-q, q+1)
         pt = Point(i,x,y)
         T.insertion(pt)
     return T
@@ -161,4 +195,3 @@ T.recherche(pt2).affiche_Quadtree()
 
 A = Quadtree_Aleatoire(4, 10, 10)
 A.affiche_Quadtree()
->>>>>>> f3081bba84149cde312f64966521851123f40dbf
