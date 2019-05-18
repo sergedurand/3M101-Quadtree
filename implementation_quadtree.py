@@ -123,6 +123,7 @@ class Quadtree():
             return None
         return (self.NW is None and self.NE is None and self.SW is None and self.SE is None)
 
+    #à finir
     def suppression(self,x):
         """suppression de l'élément x de l'arbre
         renvoie l'arbre après la suppression
