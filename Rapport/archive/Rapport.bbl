@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{Cormen:2009:IAT:1614191}
+Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein.
+\newblock {\em Introduction to Algorithms, Third Edition}.
+\newblock The MIT Press, 3rd edition, 2009.
+
+\bibitem{Stanley:2011:ECV:2124415}
+Richard~P. Stanley.
+\newblock {\em Enumerative Combinatorics: Volume 1}.
+\newblock Cambridge University Press, New York, NY, USA, 2nd edition, 2011.
+
+\bibitem{Vincent}
+Jean-Marc Vincent.
+\newblock Heapsort.
+\newblock
+  \url{http://mescal.imag.fr/membres/jean-marc.vincent/index.html/ProTer/Algorithmes-Classiques/Heapsort.pdf}.
+
+\bibitem{wiki:Tree}
+Wikipedia.
+\newblock {Tree (graph theory)} --- {W}ikipedia{,} the free encyclopedia.
+\newblock
+  \url{http://en.wikipedia.org/w/index.php?title=Tree\%20(graph\%20theory)&oldid=883778328},
+  2019.
+\newblock [Online; accessed 04-March-2019].
+
+\bibitem{wiki:TriParTas}
+Wikipedia.
+\newblock {Tri par tas} --- {W}ikipedia{,} the free encyclopedia.
+\newblock \url{ https://fr.wikipedia.org/wiki/Tri_par_tas}, 2019.
+\newblock [Online; accessed 16-March-2019].
+
+\end{thebibliography}
